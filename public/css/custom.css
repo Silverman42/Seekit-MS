@@ -1,0 +1,269 @@
+@font-face {
+  font-family: 'Righteous';
+  src: url('../fonts/Righteous/Righteous-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Fredericka the Great';
+  src: url('../fonts/Fredericka_the_Great/FrederickatheGreat-Regular.ttf') format('truetype');
+}
+body{
+    padding-top: 80px;
+    background: rgba(200, 200, 160, 0.7) 
+}
+legend{
+    font-family: "Righteous",Arial, Helvetica, sans-serif
+}
+/*input*/
+.form-control{
+    border-radius: 0px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+}
+.cover{
+    width: 100%;
+    display: block;
+    position: relative;
+    float: left;
+    font-weight: lighter;
+    letter-spacing: 1px;
+}
+.cover-2{
+    -webkit-filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
+    display: block;
+    position: relative;
+    float: left;
+}
+.cover-3{
+    display: inline-block;
+    position: relative;
+
+    width: 100%;
+}
+.cover-4{
+    background: white;
+    padding: 30px 30px;
+    box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.2)
+}
+/*navbar*/
+.navbar-brand{
+    font-family: "Fredericka the Great", sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+/*table-edit*/
+thead{
+    background: black;
+}
+th{
+    background: black;
+    color: rgba(200,200,200,1);
+    padding: 5px 0px;
+}
+td:nth-of-type(odd){
+    background: dodgerblue;
+    color: white;
+    padding: 5px 0px;
+}
+td:nth-of-type(odd)>a{
+    color: white;
+    text-decoration: none;
+    -webkit-transition: color 0.3s ease 0.3s;
+    transition: color 0.3s linear 0.3s;
+}
+td:nth-of-type(odd)>a:hover{
+    color: rgba(200,200,200,1);
+    text-decoration: none;
+}
+
+td:nth-of-type(even){
+    background: lightslategray;
+    color: white;
+    padding: 5px 0px;
+}
+td:nth-of-type(even)>a{
+    color: white;
+    text-decoration: none;
+    -webkit-transition: color 0.3s ease 0.3s;
+    transition: color 0.3s linear 0.3s;
+}
+td:nth-of-type(even)>a:hover{
+    color: rgba(50,50,50,1);
+    text-decoration: none;
+}
+/*Side-bar*/
+.fixed-left{
+    width: 70px;
+    display: block;
+    position: fixed;
+    left: -14px;
+    top: 52px;
+    bottom: 0px;
+    z-index: 4;
+}
+.side-nav{
+    left: 0px;
+    padding: 20px 0pc;
+    background: rgba(240,240,240,1);
+    text-align: center;
+    -webkit-transition: background 0.3s linear 0.7s; 
+    transition: background 0.3s linear 0.2s;
+}
+.side-nav:hover{
+    background: rgba(200,200,200,1);
+}
+.side-nav>a{
+    text-decoration: none;
+    color: rgba(90, 90, 90, 1);
+    font-size: 17px;
+}
+/*btn*/
+.btn{
+    border-radius: 50%;
+    padding: 7px 10px;
+}
+/*logo*/
+.outer-circle{
+    margin-top: 80px;
+    border-radius: 50%;
+    right: 0px;
+    height: 340px;
+    text-align: right;
+    border-left: 2px solid rgba(300, 300, 300, 0);
+    border-top: 2px solid rgba(300, 300, 300, 0);
+    top: -20px;
+    -webkit-animation: drive 0.6s ease-in 0.2s forwards, appear 0.5s linear 0.6s forwards;
+    animation: drive 0.6s ease-in 0.2s forwards, appear 0.5s linear 0.6s forwards;
+    }
+.icons{
+    margin-top: 90px;
+    font-size: 130px;
+    color: white;
+}
+.major{
+    transform: rotateY(180deg);
+    filter: drop-shadow(1px 1px 8px rgba(300,300,300,0.4));
+}
+.sub-icon{
+    border-top: 2px solid white;
+    padding: 0px;
+    margin: 30px 0px;
+}
+.one{
+    width: 80%;
+}
+.two{
+    width: 50%;
+}
+.three{
+    width: 25%;
+}
+.logo{
+    color:rgba(300,300,300,0);
+    margin-top: 290px;
+}
+.logo>h1{
+    font-family: "Fredericka the Great", sans-serif;
+    font-size: 50px;
+    margin-left: -10px;
+    -webkit-animation: logo 3s ease-in 0.6s forwards;
+    animation: logo 3s ease-in 0.6s forwards;
+}
+.logo>p{
+    font-family: "Righteous", sans-serif;
+    font-size: 15px;
+    margin: 70px 0px 0px 25px;
+    -webkit-animation: logo 5s ease-in 0.8s forwards;
+    animation: logo 5s ease-in 0.8s forwards;
+}
+@keyframes drive{
+    from{
+        transform: translate(0px,0px);
+    }
+    to{
+        transform: translate(-200px,0px);
+    }
+}
+@-webkit-keyframes drive{
+    from{
+        transform: -webkit-translate(0px,0px);
+    }
+    to{
+        transform: -webkit-translate(-200px,0px);
+    }
+}
+@keyframes appear {
+    from{
+        border-color: rgba(300, 300, 300, 0);
+    }
+    to{
+        border-color: rgba(300, 300, 300, 1);
+        box-shadow: -2px -2px 9px 3px rgba(300, 300, 300, 1);
+    }
+}
+@keyframes logo{
+    0%{
+        color: rgba(300, 300, 300, 0);
+    }
+    25%{
+        color: rgba(300, 300, 300, 1);
+        text-shadow: 0px 0px 10px rgba(300, 300, 300, 0.4);
+    }
+    50%{
+        color: rgba(300, 300, 300, 1);
+        text-shadow: 0px 0px 30px rgba(300, 300, 300, 0.8);
+    }
+    100%{
+        color: rgba(300, 300, 300, 1);
+        text-shadow: 0px 0px 10px rgba(300, 300, 300, 0.2);
+    }
+}
+/*Welcome Screen*/
+.ws{
+    display: block;
+    position: fixed;
+    z-index: 4;
+    height: 100%;
+    width: 100%;
+    top:0px;
+    left: 0px;
+    right: 0px;
+    background: linear-gradient(45deg,rgba(0, 50, 100, 1) 30%,rgba(0, 100, 200, 1) 40%,rgba(0, 150, 250, 1) 50%) ;
+    background: -webkit-linear-gradient(45deg,rgba(0, 50, 150, 1) 30%, rgba(0, 100, 200, 1) 40%,rgba(0, 150, 250, 1) 50%);
+    overflow: hidden;
+    animation: wsanimate 1s ease-out 3s forwards;
+    -webkit-animation: wsanimate 1s ease-out 3s forwards;
+}
+@keyframes wsanimate {
+    0%{
+        height: 100%;
+    }
+    100%{
+        height: 0%;
+    }
+}
+@-webkit-keyframes wsanimate {
+    0%{
+        height: 100%;
+    }
+    100%{
+        height: 0%;
+    }
+}
+/*bottom-buttons*/
+.nav-btns{
+    display: block;
+    position: fixed;
+    left: -37px;
+    bottom: 0px;
+    z-index: 5;
+}
+.nav-btns>ul{
+    list-style: none;
+}
+.nav-btns>ul>li{
+    padding: 3px 4px;
+    -webkit-filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.6));
+    filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.6));
+}
+
