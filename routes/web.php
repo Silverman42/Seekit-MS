@@ -12,14 +12,14 @@
 */
 
 Route::get('/', function () {
+    Schema::create('product', function ($table) {
+        $table->increments('id');
+        $table->string
+        $table->timestamps();
+    });
     return view('index');
 });
-Route::get('transaction/', function () {
-    return view('transaction.transactions');
-});
-Route::get('transaction/description', function () {
-    return view('transaction.description');
-});
+Route::resource('transaction', 'transactionController');
 Route::resource('product', 'productController' );
 Route::get('new-category', function () {
     return view('new-category');

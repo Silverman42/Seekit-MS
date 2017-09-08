@@ -54,10 +54,10 @@
     <div class="container-fluid">
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1 cover-2 fixed-left">
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="All products" data-placement="right">
-                <a href="/all-products"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="/product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Product" data-placement="right">
-                <a href="/new-product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="/product/create"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Category" data-placement="right">
                 <a href="#"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
