@@ -71,35 +71,37 @@
         </div>
        <div class="col-xs-2 col-sm-2 col-md-6 col-lg-8 col-lg-push-2 cover-4">
             <div class="cover-3 ">
-                <form action="" method="POST" class="form-horizontal" role="form">
+                <form method="POST" action="{{URL::to('product')}}" class="form-horizontal" id="productSubmit" role="form">
                     <div class="form-group">
                         <legend>New Product</legend>
                     </div>
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="inputProductName">Product Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="" id="inputProductName" class="form-control" value="" required="required" pattern="" title="">
+                            <input type="text" name="productName" id="inputProductName" class="form-control" value="" title="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputSelectCategory" class="col-sm-2 control-label">Select Category:</label>
                         <div class="col-sm-10">
-                            <select name="" id="inputSelectCategory" class="form-control">
-                            <option value="">-- Select One --</option>
+                            <select name="productCategory" id="inputSelectCategory" class="form-control">
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->categoryName}}</option>
+                            @endforeach
                         </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="input1/(\w+)/\u\1/g" class="col-sm-2 control-label">Quantity:</label>
                         <div class="col-sm-10">
-                            <input type="number" name="" id="input1/(\w+)/\u\1/g" class="form-control" value="" min="{6" } max="" step="" required="required"
-                                title="">
+                            <input type="number" name="productQuantity" id="input1/(\w+)/\u\1/g" class="form-control" value="" title="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="input1/(\w+)/\u\1/g" class="col-sm-2 control-label">Price:</label>
                         <div class="col-sm-10">
-                            <input type="number" name="" id="input1/(\w+)/\u\1/g" class="form-control" value="" min="{6" } max="" step="" required="required"
+                            <input type="number" name="productPrice" id="input1/(\w+)/\u\1/g" class="form-control" value="" min="{6" } max="" step="" required="required"
                                 title="">
                         </div>
                     </div>

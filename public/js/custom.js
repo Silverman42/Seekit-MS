@@ -23,4 +23,23 @@ $(document).ready(function(){
             window.location.hash = hash;
         });
     });
+    //Submit product creation form
+    $("#productSubmit").submit(function (e) { 
+        e.preventDefault();
+        var method = $(this).attr('method');
+        var action = $(this).attr('action');
+        var data = $(this).serialize();
+        var form = $(this);
+        $.ajax({
+            type: method,
+            url: action,
+            data: data,
+            success: function (response) {
+                form[0].reset();
+            },
+            error: function () { 
+                console.log('Could not connect with back-end');
+            }
+        });
+    });
 });

@@ -71,14 +71,15 @@
         </div>
         <div class="col-lg-8 col-lg-push-2 cover-4" id="top">
             <div class="cover-3 ">
-                <form action="" method="POST" class="form-horizontal" role="form">
+                <form action="{{URL::to('category/create')}}" method="POST" class="form-horizontal" role="form">
                     <div class="form-group">
                         <legend>New Category</legend>
                     </div>
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="input1/(\w+)/\u\1/g">Category Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="" id="input1/(\w+)/\u\1/g" class="form-control" value="" required="required" pattern="" title="">
+                            <input type="text" name="name" id="input1/(\w+)/\u\1/g" class="form-control" value="" title="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -95,15 +96,17 @@
                     <div class="table-responsive">
                         <table class="table">
                             <tbody>
-                                <tr>
-                                    <td>dbkskskjjdjkskjkjsdkjk</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary">
-                                            
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </button>
-                                    </td>
-                                </tr>
+                                @foreach($categories as $category)
+                                    <tr>
+                                        <td>{{$category->categoryName}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary">
+                                                
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

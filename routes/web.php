@@ -12,17 +12,22 @@
 */
 
 Route::get('/', function () {
-    Schema::create('product', function ($table) {
-        $table->increments('id');
-        $table->string
-        $table->timestamps();
-    });
     return view('index');
 });
 Route::resource('transaction', 'transactionController');
 Route::resource('product', 'productController' );
 Route::get('new-category', function () {
-    return view('new-category');
+    //fetch all categories from category table
+    $categories = \seekit\category::all();
+    return view('new-category')->with('categories',$categories);
+});
+Route::post('category/create', function () {
+    //create new category
+    $category = Request::all();
+    $input = new \seekit\category ;
+    $input->categoryName = $category['name'];
+    $input->save();
+    return redirect('new-category');
 });
 Route::get('admin', function () {
     return view('admin');

@@ -13,8 +13,9 @@ class productController extends Controller
      */
     public function index()
     {
-        //
-        return view('product.index');
+        //fetch all products from products table
+        $products = \seekit\product::all();
+        return view('product.index')->with('products',$products);
     }
 
     /**
@@ -24,8 +25,9 @@ class productController extends Controller
      */
     public function create()
     {
-        //
-        return view('product.create');
+        //fetch all categories from category table
+        $categories = \seekit\category::all();
+        return view('product.create')->with('categories',$categories);
     }
 
     /**
@@ -36,7 +38,14 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //save inputs from /products/create.blade.php to database
+        $product = new \seekit\product;
+        $product->productName = $request['productName'];
+        $product->categoryId = $request['productCategory'];
+        $product->price = $request['productPrice'];
+        $product->quantity = $request['productQuantity'];
+        $product->save();
+        //return redirect()->back();
     }
 
     /**

@@ -102,31 +102,21 @@
                                         <th>Price</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" value="">
-                                            <a href="">sdbhshhhehhhejjekejemejj</a>
-                                        </td>
-                                        <td>abask</td>
-                                        <td>ankjak
-                                            <a href="" class="btn btn-primary pull-right">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" value="">
-                                            <a href="">sdbhshhhehhhejjekejemejj</a>
-                                        </td>
-                                        <td>abask</td>
-                                        <td>ankjak
-                                            <a href="" class="btn btn-primary pull-right">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </a>
-                                        </td>
-                                    </tr>
+                                <tbody> 
+                                    @foreach($products as $product)
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" value="">
+                                                <a href="">{{$product->productName}}</a>
+                                            </td>
+                                            <td>{{$product->quantity}}</td>
+                                            <td>{{$product->price}}
+                                                <a href="" class="btn btn-primary pull-right">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
 
                             </table>
@@ -159,6 +149,7 @@
     <script src="js/jquery-2.1.4.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    {{--Custom Javascript--}}
     <script src="js/custom.js"></script>
 </body>
 
