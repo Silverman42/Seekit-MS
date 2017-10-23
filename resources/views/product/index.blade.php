@@ -45,13 +45,6 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <form class="navbar-form pull-left form-inline">
-                    <div class="form-group">
-                        <input type="text" name="" id="input1/(\w+)/\u\1/g" class="form-control" value="" required="required" pattern="" title=""
-                            placeholder="Search product or Category">
-                        <button type="submit" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                        </button>
-                    </div>
                 </form>
                 <li>
                     <a href="#" data-toggle="tooltip" title="Logout" data-placement="bottom">
@@ -79,58 +72,75 @@
                 <a href="product/create"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Category" data-placement="right">
-                <a href="/new-category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                <a href="/category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="All Transactions" data-placement="right">
+            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Transactions" data-placement="right">
                 <a href="/transaction"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Edit Admin" data-placement="right">
                 <a href="/admin"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
             </div>
         </div>
-        <form action="" method="POST">
+        
+            
             <div class="col-lg-8 col-lg-push-2 cover-4" id="top">
                 <div class="cover-3 ">
-                    <legend>All Products</legend>
+                    <div class="col-sm-10">
+                        <legend>All Products</legend>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" id="select-all" class="btn btn-default" data-toggle="tooltip" title="Select All products" data-placement="right">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="col-sm-11">
+                        <div class="form-group">
+                            <input type="text" name="" id="input1/(\w+)/\u\1/g" class="form-control" value="" required="required" pattern="" title=""
+                                placeholder="Search product or Category">
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                         <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                    </div>
                     <div class="cover">
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>Product</th>
+                                        <th>Category</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" value="">
-                                            <a href="">sdbhshhhehhhejjekejemejj</a>
-                                        </td>
-                                        <td>abask</td>
-                                        <td>ankjak
-                                            <a href="" class="btn btn-primary pull-right">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" value="">
-                                            <a href="">sdbhshhhehhhejjekejemejj</a>
-                                        </td>
-                                        <td>abask</td>
-                                        <td>ankjak
-                                            <a href="" class="btn btn-primary pull-right">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </a>
-                                        </td>
-                                    </tr>
+                                <tbody> 
+                                    @foreach($products as $product)
+                                        <tr>
+                                            <td class="selectable">
+                                                <input type="checkbox" value="{{$product->id}}" hidden>
+                                                <a href="{{ URL::to('product/'.$product->id.'/edit') }}">{{$product->productName}}</a>
+                                            </td>
+                                            <td>{{$product->category->categoryName}}</td>
+                                            <td>{{$product->quantity}}</td>
+                                            <td>{{$product->price}}
+                                                <form  action="product/{{ $product->id }}" method="POST">
+                                                    {{ csrf_field() }}
+                                                    <input name="_method" hidden value="delete"/>
+                                                    <button  class="btn btn-primary pull-right" type="submit">
+                                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
-
                             </table>
                         </div>
+                    </div>
+                    <div class="col-sm-12">
+                         {{$products->links()}}
                     </div>
                 </div>
             </div>
@@ -153,12 +163,13 @@
                     </li>
                 </ul>
             </div>
-        </form>
+        
     </div>
     <!-- jQuery -->
     <script src="js/jquery-2.1.4.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    {{--Custom Javascript--}}
     <script src="js/custom.js"></script>
 </body>
 

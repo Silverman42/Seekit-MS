@@ -14,16 +14,18 @@
 Route::get('/', function () {
     return view('index');
 });
-Route::get('transaction/', function () {
-    return view('transaction.transactions');
-});
-Route::get('transaction/description', function () {
-    return view('transaction.description');
-});
+Route::resource('transaction', 'transactionController');
 Route::resource('product', 'productController' );
-Route::get('new-category', function () {
-    return view('new-category');
+Route::resource('category','categoryController');
+Route::get('users/', function () {
+    $products = \seekit\product::all();
+    var_dump(count($products));
+    $products->each(function($product){
+        var_dump($product->productName);
+    });
 });
+Route::post('search/transaction', 'searchController@transactionSearch');
+Route::post('search/product', 'searchController@productSearch');
 Route::get('admin', function () {
     return view('admin');
 });

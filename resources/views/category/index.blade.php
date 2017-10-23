@@ -54,15 +54,15 @@
     <div class="container-fluid">
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1 cover-2 fixed-left">
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="All products" data-placement="right">
-                <a href="/all-products"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="/product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Product" data-placement="right">
-                <a href="/new-product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="/product/create"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Category" data-placement="right">
                 <a href="#"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="All Transactions" data-placement="right">
+            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Transactions" data-placement="right">
                 <a href="/transaction"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Edit Admin" data-placement="right">
@@ -71,21 +71,25 @@
         </div>
         <div class="col-lg-8 col-lg-push-2 cover-4" id="top">
             <div class="cover-3 ">
-                <form action="" method="POST" class="form-horizontal" role="form">
+                <form action="{{URL::to('category')}}" method="POST" class="form-horizontal" id="categorySubmit" role="form">
                     <div class="form-group">
                         <legend>New Category</legend>
                     </div>
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="input1/(\w+)/\u\1/g">Category Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="" id="input1/(\w+)/\u\1/g" class="form-control" value="" required="required" pattern="" title="">
+                            <input type="text" name="name" id="input1/(\w+)/\u\1/g" class="form-control" value="" title="">
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-10 col-sm-offset-2">
+                        <div class="col-sm-1 col-sm-offset-2">
                             <button type="submit" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                        </button>
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="col-sm-5 col-sm-offset-1">
+                            <div class="response"></div>
                         </div>
                     </div>
                 </form>
@@ -95,15 +99,20 @@
                     <div class="table-responsive">
                         <table class="table">
                             <tbody>
-                                <tr>
-                                    <td>dbkskskjjdjkskjkjsdkjk</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary">
-                                            
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </button>
-                                    </td>
-                                </tr>
+                                @foreach($categories as $category)
+                                    <tr>
+                                        <td><a href="{{ URL::to('/category/'.$category->id).'/edit' }}">{{$category->categoryName}}</a></td>
+                                        <td>
+                                            <form action="{{URL::to('category/'.$category->id)}}" method="POST">
+                                                {{csrf_field()}}
+                                                <input hidden name="_method" value="delete"/>
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="de">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>New Product</title>
+    <title>{{ $product->productName }}</title>
     <!-- Bootstrap CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/custom.css">
-    <link href="../css/bootstrap-theme.css" rel="stylesheet">
-    <link href="../css/non-responsive.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link href="/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/css/non-responsive.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -71,38 +71,40 @@
         </div>
        <div class="col-xs-2 col-sm-2 col-md-6 col-lg-8 col-lg-push-2 cover-4">
             <div class="cover-3 ">
-                <form method="POST" action="{{URL::to('/product/')}}" class="form-horizontal" id="productSubmit" role="form">
+                <form method="POST" action="{{ URL::to('product/'.$product->id) }}" class="form-horizontal" id="productUpdate"  role="form">
                     <div class="form-group">
-                        <legend>New Product</legend>
+                        <div class="col-xs-11"><legend>Update : {{ $product->productName }} </legend></div>
+                        <div class="col-xs-1"><a data-toggle="tooltip" title="Back" data-placement="right" href="{{URL::to('/product')}}" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a></div>
                     </div>
                     {{ csrf_field() }}
+                    <input hidden name="_method" value="put"/>
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="inputProductName">Product Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="productName" id="inputProductName" class="form-control" value="" title="">
+                            <input type="text" name="productName" id="inputProductName" class="form-control" value="{{ $product->productName }}" title="">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"> 
                         <label for="inputSelectCategory" class="col-sm-2 control-label">Select Category:</label>
                         <div class="col-sm-10">
                             <select name="productCategory" id="inputSelectCategory" class="form-control">
-                            
+                                <option value="{{ $product->categoryId }}">{{ $product->category->categoryName }}<option>
                             @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->categoryName}}</option>
                             @endforeach
-                            </select>
+                        </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="input1/(\w+)/\u\1/g" class="col-sm-2 control-label">Quantity:</label>
                         <div class="col-sm-10">
-                            <input type="number" name="productQuantity" id="input1/(\w+)/\u\1/g" class="form-control" value="" title="">
+                            <input type="number" name="productQuantity" id="input1/(\w+)/\u\1/g" class="form-control" value="{{ $product->quantity }}" title="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="input1/(\w+)/\u\1/g" class="col-sm-2 control-label">Price:</label>
                         <div class="col-sm-10">
-                            <input type="number" name="productPrice" id="input1/(\w+)/\u\1/g" class="form-control" value="" min="{6" } max="" step="" required="required"
+                            <input type="number" name="productPrice" id="input1/(\w+)/\u\1/g" class="form-control" value="{{ $product->price }}" min="{6" } max="" step="" required="required"
                                 title="">
                         </div>
                     </div>
@@ -121,10 +123,10 @@
         </div>
     </div>
     <!-- jQuery -->
-    <script src="../js/jquery-2.1.4.min.js"></script>
+    <script src="/js/jquery-2.1.4.min.js"></script>
     <!-- Bootstrap JavaScript -->
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/custom.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/custom.js"></script>
 </body>
 
 </html>

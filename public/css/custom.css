@@ -52,6 +52,11 @@ legend{
     font-weight: bold;
 }
 /*table-edit*/
+#transaction-body{
+    -webkit-transition: height 0.6s linear;
+    -moz-transition: height 0.6s linear;
+    transition: height 0.6s linear;
+}
 thead{
     background: black;
 }
@@ -59,6 +64,18 @@ th{
     background: black;
     color: rgba(200,200,200,1);
     padding: 5px 0px;
+}
+.selectable{
+    -webkit-transition: background 0.3s ease-in 0.05s;
+    -moz-transition: background 0.3s ease-in 0.05s;
+    transition: background 0.3s ease-in 0.1s;
+    cursor: pointer;
+}
+.selectable:hover{
+    background: rgba(26, 78, 111, 0.96);
+}
+.selected{
+    background: rgba(26, 78, 111, 1) !important;
 }
 td:nth-of-type(odd){
     background: dodgerblue;
@@ -91,6 +108,10 @@ td:nth-of-type(even)>a:hover{
     color: rgba(50,50,50,1);
     text-decoration: none;
 }
+.tfoot, .tfoot>td{
+    background-color: #BDBDBD;
+}
+
 /*Side-bar*/
 .fixed-left{
     width: 70px;
@@ -265,5 +286,36 @@ td:nth-of-type(even)>a:hover{
     padding: 3px 4px;
     -webkit-filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.6));
     filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.6));
+}
+/*Notification*/
+.response{
+    display: none;
+    text-align: center;
+    font-size: 12px;
+    padding: 10px 10px;
+    border-radius: 40px 40px;
+    color: rgba(243, 243, 243, 0.93);
+    background: rgba(163, 166, 168, 0.93)
+}
+/*Suggestion boox*/
+#suggestion-container{
+    display: block;
+    width: 800px;
+    position: absolute;
+    z-index: 4;
+}
+.suggestion-box{
+    display: block;
+    position: relative;
+    background-color: white;
+    color: black;
+    width: 100%;
+    padding: 10px 10px;
+    -webkit-transition: background 0.7s linear;
+    -moz-transition: background 0.7s linear;
+    transition: background 0.7s linear;
+}
+.suggestion-box:hover{
+    background: #D3D3D3;
 }
 

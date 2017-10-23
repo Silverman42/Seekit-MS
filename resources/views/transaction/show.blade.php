@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Transactions</title>
+    <title>Transaction Description</title>
     <script>
         function forprint() {
             if (!window.print) {
@@ -63,16 +63,16 @@
     <div class="container-fluid">
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1 cover-2 fixed-left">
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="All products" data-placement="right">
-                <a href="../all-products"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="../product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Product" data-placement="right">
-                <a href="../new-product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="../product/create"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Category" data-placement="right">
-                <a href="../new-category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                <a href="../category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="All Transactions" data-placement="right">
-                <a href="#"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a>
+            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Transactions" data-placement="right">
+                <a href="/transaction"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Edit Admin" data-placement="right">
                 <a href="../admin"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
@@ -80,90 +80,51 @@
         </div>
         <div class="col-lg-8 col-lg-push-2 cover-4" id="top">
             <div class="cover-3 ">
-                <legend>Transactions</legend>
+                <legend>Transaction Description</legend>
                 <div class="cover">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Transaction ID</th>
-                                    <th>Trans. Time & Date</th>
-                                    <th>Amount</th>
+                                    <th>Product</th>
+                                    <th>Quantity Purchased</th>
+                                    <th>Quantity Available</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
+                                    <td>
+                                        <a href="">sdbhshhhehhhejjekejemejj</a>
+                                    </td>
+                                    <td>
+                                        123
+                                    </td>
+                                    <td>
+                                        100000
+                                    </td>
+                                    <td>
+                                        100000
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr><tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
+                                    <td>
+                                        <a href="">sdbhshhhehhhejjekejemejj</a>
+                                    </td>
+                                    <td>123</td>
+                                    <td>
+                                        100000
+                                    </td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>TO</th>
+                                    <th>3223</th>
+                                    <th>772277</th>
+                                </tr>
+                            </tfoot>
                         </table>
-                        
                     </div>
                 </div>
             </div>
@@ -178,11 +139,10 @@
                 <li>
                     <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Print" data-placement="right">
                         <a href="javascript:forprint()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
-                    </button>                    
+                    </button>
                 </li>
             </ul>
         </div>
-        
     </div>
     <!-- jQuery -->
     <script src="../js/jquery-2.1.4.min.js"></script>
