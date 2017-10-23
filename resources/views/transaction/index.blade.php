@@ -69,10 +69,10 @@
                 <a href="../product/create"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Category" data-placement="right">
-                <a href="../new-category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                <a href="../category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="All Transactions" data-placement="right">
-                <a href="#"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a>
+            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Transactions" data-placement="right">
+                <a href="/transaction"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Edit Admin" data-placement="right">
                 <a href="../admin"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
@@ -80,82 +80,69 @@
         </div>
         <div class="col-lg-8 col-lg-push-2 cover-4" id="top">
             <div class="cover-3 ">
-                <legend>Transactions</legend>
+                <div class="col-sm-11">
+                    <legend>New Transaction</legend>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" id="delete-transact" class="btn btn-default" data-toggle="tooltip" title="Delete All Entries" data-placement="right">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <form method="POST" action="{{URL::to('/search/transaction')}}" id="transAction">
+                {{ csrf_field() }}
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <input type="text" name="searchItem" id="transProductSearch" class="form-control" value="" title=""
+                            placeholder="Search product">
+                        <div id="suggestion-container"></div>
+                    </div>
+
+                </div>
+                </form>
+                <div class="cover">
+                    <div class="table-responsive">
+                        <form action="" method="">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity purchased</th>
+                                        <th>Quantity Available</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transaction-body">
+
+                                </tbody>
+                                <tfoot>
+                                    <tr class="tfoot">
+                                        <td>Total</td>
+                                        <td id="transactionTotal"></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-12" style="text-align:center"><p class="response"></p></div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-lg-push-2 cover-4" id="top">
+            <div class="cover-3 ">
+                <legend>Transaction History</legend>
                 <div class="cover">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>Transaction ID</th>
-                                    <th>Trans. Time & Date</th>
-                                    <th>Amount</th>
+                                    <th>Time & Date</th>
+                                    <th>Profit</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr><tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>jhhsjjsdhh</td>
-                                    <td>1000</td>
-                                    <td>2000</td>
-                                </tr>
                                 <tr>
                                     <td>jhhsjjsdhh</td>
                                     <td>1000</td>

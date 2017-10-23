@@ -16,19 +16,16 @@ Route::get('/', function () {
 });
 Route::resource('transaction', 'transactionController');
 Route::resource('product', 'productController' );
-Route::get('new-category', function () {
-    //fetch all categories from category table
-    $categories = \seekit\category::all();
-    return view('new-category')->with('categories',$categories);
+Route::resource('category','categoryController');
+Route::get('users/', function () {
+    $products = \seekit\product::all();
+    var_dump(count($products));
+    $products->each(function($product){
+        var_dump($product->productName);
+    });
 });
-Route::post('category/create', function () {
-    //create new category
-    $category = Request::all();
-    $input = new \seekit\category ;
-    $input->categoryName = $category['name'];
-    $input->save();
-    return redirect('new-category');
-});
+Route::post('search/transaction', 'searchController@transactionSearch');
+Route::post('search/product', 'searchController@productSearch');
 Route::get('admin', function () {
     return view('admin');
 });

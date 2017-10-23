@@ -69,10 +69,10 @@
                 <a href="../product/create"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Category" data-placement="right">
-                <a href="../new-category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                <a href="../category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="All Transactions" data-placement="right">
-                <a href="transaction/"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a>
+            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Transactions" data-placement="right">
+                <a href="/transaction"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Edit Admin" data-placement="right">
                 <a href="../admin"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
@@ -88,6 +88,7 @@
                                 <tr>
                                     <th>Product</th>
                                     <th>Quantity Purchased</th>
+                                    <th>Quantity Available</th>
                                     <th>Price</th>
                                 </tr>
                             </thead>
@@ -98,6 +99,9 @@
                                     </td>
                                     <td>
                                         123
+                                    </td>
+                                    <td>
+                                        100000
                                     </td>
                                     <td>
                                         100000
@@ -115,7 +119,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Total</th>
+                                    <th>TO</th>
                                     <th>3223</th>
                                     <th>772277</th>
                                 </tr>
