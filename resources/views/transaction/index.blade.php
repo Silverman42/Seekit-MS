@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf_token" content="{{ csrf_token() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Transactions</title>
     <script>
@@ -99,9 +100,9 @@
 
                 </div>
                 </form>
+                <form id="transactForm" action="{{URL::to('/transaction')}}">
                 <div class="cover">
                     <div class="table-responsive">
-                        <form action="" method="">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -123,11 +124,16 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                        </form>
+                        
                     </div>
                 </div>
+                <div class="col-sm-12"><button id="transactionCreate" disabled="disabled" style="margin:auto;display: block" type="submit" data-toggle="tooltip" title="Create transaction" data-placement="bottom" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                    </button></div>
                 <div class="col-sm-12" style="text-align:center"><p class="response"></p></div>
+                </form>
             </div>
+            
         </div>
         <div class="col-lg-8 col-lg-push-2 cover-4" id="top">
             <div class="cover-3 ">

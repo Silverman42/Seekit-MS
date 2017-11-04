@@ -176,7 +176,7 @@ return [
         // seekit\Providers\BroadcastServiceProvider::class,
         seekit\Providers\EventServiceProvider::class,
         seekit\Providers\RouteServiceProvider::class,
-
+        Mavinoo\UpdateBatch\UpdateBatchServiceProvider::class
     ],
 
     /*
@@ -225,7 +225,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'UpdateBatch' => Mavinoo\UpdateBatch\UpdateBatchFacade::class
     ],
 
 ];

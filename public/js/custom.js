@@ -24,13 +24,13 @@ $(document).ready(function () {
         });
     });
     //Submit product creation form
-  $("#productSubmit").submit(function (e) {
+    $("#productSubmit").submit(function (e) {
         e.preventDefault();
         var method = $(this).attr('method');
         var action = $(this).attr('action');
         var data = $(this).serialize();
         var form = $(this);
-        
+
         $.ajax({
             type: method,
             url: action,
@@ -51,7 +51,7 @@ $(document).ready(function () {
         var action = $(this).attr('action');
         var data = $(this).serialize();
         var form = $(this);
-        
+
         $.ajax({
             type: method,
             url: action,
@@ -59,8 +59,8 @@ $(document).ready(function () {
             success: function (response) {
                 form[0].reset();
                 $('.response').text(response).fadeIn(1000).delay(4000).fadeOut(1000);
-                if(response === 'Product details updated'){
-                    setInterval(location.reload(),3000);
+                if (response === 'Product details updated') {
+                    setInterval(location.reload(), 3000);
                 }
             },
             error: function () {
@@ -75,7 +75,7 @@ $(document).ready(function () {
         var action = $(this).attr('action');
         var data = $(this).serialize();
         var form = $(this);
-        
+
         $.ajax({
             type: method,
             url: action,
@@ -96,7 +96,7 @@ $(document).ready(function () {
         var action = $(this).attr('action');
         var data = $(this).serialize();
         var form = $(this);
-        
+
         $.ajax({
             type: method,
             url: action,
@@ -104,7 +104,7 @@ $(document).ready(function () {
             success: function (response) {
                 form[0].reset();
                 $('.response').text(response).fadeIn(1000).delay(4000).fadeOut(1000);
-                if(response === "Category Update successful"){
+                if (response === "Category Update successful") {
                     setInterval(location.reload(), 3000);
                 };
             },
@@ -116,31 +116,30 @@ $(document).ready(function () {
     });
     //Search product in DB for transaction
     var pEntities = [];
-    function deleteTransaction(params,target) {
-        $(params).click(function (e) {  
+
+    function deleteTransaction(params, target) {
+        $(params).click(function (e) {
             e.preventDefault();
             $(target).empty();
-        }); 
+        });
     }
-    function createInput(selector,arr){
+
+    function createInput(selector, arr) {
         $(selector).each(function (index, element) {
             // element == this
-            $(document).on('click',element,function (e) {
+            $(document).on('click', element, function (e) {
 
-                $('#transaction-body').append('<tr class="transaction-entry"><input hidden class="prodId" value="'+arr[index].id+'"/><td>'+arr[index].prodName+'</td><td><input class="quantityInput" style="color:black" type="number"></td><td>'+arr[index].prodQuantity +'</td><td>'+arr[index].prodPrice +'</td></tr>');
+                $('#transaction-body').append('<tr class="transaction-entry"><input hidden class="prodId" value="' + arr[index].id + '"/><td>' + arr[index].prodName + '</td><td><input class="quantityInput" style="color:black" type="number"></td><td>' + arr[index].prodQuantity + '</td><td>' + arr[index].prodPrice + '</td></tr>');
                 $(selector).remove();
             })
         });
     }
-    function transactCalculate(selector){
-        $(selector).keyup(function (e) {  
-            e.preventDefault();
-            console.log($(this).val());
-        })
-    }
-    $('#transProductSearch').on('keyup',function (e) { 
+
+    /*Desc -- Keyup event listener to search for suggestions through ajax request
+     */
+    $('#transProductSearch').on('keyup', function (e) {
         e.preventDefault();
-        if($(this).val() !== ""){
+        if ($(this).val() !== "") {
             $.ajax({
                 type: "POST",
                 url: $('#transAction').attr('action'),
@@ -149,57 +148,103 @@ $(document).ready(function () {
                     $(".suggestion-box").remove();
                     pEntities = [];
                     response = jQuery.parseJSON(response);
-                    $.each(response, function (indexInArray, value) { 
-                         $("#suggestion-container").append($('<div>',{class:"suggestion-box", text:value.productName}));
-                         pEntities[indexInArray] = {prodQuantity:"",prodId:"",prodPrice:"",prodName:""};
-                         pEntities[indexInArray].prodQuantity = value.quantity;
-                         pEntities[indexInArray].prodId = value.id;
-                         pEntities[indexInArray].prodPrice = value.price;
-                         pEntities[indexInArray].prodName = value.productName;
+                    $.each(response, function (indexInArray, value) {
+                        $("#suggestion-container").append($('<div>', {
+                            class: "suggestion-box",
+                            text: value.productName
+                        }));
+                        pEntities[indexInArray] = {
+                            prodQuantity: "",
+                            prodId: "",
+                            prodPrice: "",
+                            prodName: ""
+                        };
+                        pEntities[indexInArray].prodQuantity = value.quantity;
+                        pEntities[indexInArray].prodId = value.id;
+                        pEntities[indexInArray].prodPrice = value.price;
+                        pEntities[indexInArray].prodName = value.productName;
                     });
                 },
-                error: function () { 
+                error: function () {
                     console.log($('#transAction').val());
                 }
             });
-        }
-        else{
+        } else {
             $('.suggestion-box').remove()
-        } 
+        }
     });
-    $('#suggestion-container').on("click",'.suggestion-box', function (e) {
+    /*Desc--> Click listener to create transaction entry for a selected suggestion
+     */
+    var chosenProduct = [0]; //Array for collecting id of selected suggestions
+    var cpCount = 0; //Counter to check availability of selected suggestion in chosenProduct[];
+    $('#suggestion-container').on("click", '.suggestion-box', function (e) {
         var index = $(this).index();
-        $('#transaction-body').append('<tr class="transaction-entry"><input hidden class="prodId" value="'+pEntities[index].id+'"/><td class="transactProdName">'+pEntities[index].prodName+'</td><td><input class="quantityInput" style="color:black" type="number"></td><td class="quantityAvail">'+pEntities[index].prodQuantity +'</td><td class="productPrice">'+pEntities[index].prodPrice +'</td></tr>');
-        $('.suggestion-box').remove();
-        $('#transAction')[0].reset();
+        for (var ch = 0; ch < chosenProduct.length; ch++) {
+            if (chosenProduct[ch] !== pEntities[index].prodId) {
+                if (ch === chosenProduct.length - 1) {
+                    $('#transaction-body').append('<tr class="transaction-entry"><td style="display:none"><input hidden value="' + pEntities[index].prodId + '" class="prodId"/><input hidden value="' + pEntities[index].prodQuantity + '" class="prodQuantityStatic"/></td><td class="transactProdName">' + pEntities[index].prodName + '</td><td><input class="form-control quantityInput" style="color:black" type="number"></td><td class="prodQuantityDynamic">' + pEntities[index].prodQuantity + '</td><td class="productPrice">' + pEntities[index].prodPrice + '</td></tr>');
+                    chosenProduct[cpCount] = pEntities[index].prodId;
+                    $('.suggestion-box').remove();
+                    $('#transAction')[0].reset();
+                    cpCount++;
+                }
+            } else {
+                break;
+            }
+        }
+        console.log(chosenProduct.length);
     })
-    $('#delete-transact').click(function (e) {  
+    /* Click listener to delete all transaction entries 
+     */
+    $('#delete-transact').click(function (e) {
         e.preventDefault();
         $('#transaction-body').empty();
+        $('#transactForm')[0].reset();
+        chosenProduct = [0];
     })
-    var quantityInput, quantityAvail, quantityPrice, productCal = [], totalCal;
+    /*Desc--> Event listener to calculate the total transactions with respect to the product quantity and price   
+     */
+    var quantityInput, quantityAvail = [],
+        quantityPrice, productCal = [0],
+        totalCal, productReduce;
     $('#transaction-body').mouseover(function (e) {
         $('.quantityInput').each(function (index, element) {
             // element == this
+            if ($(element).val().length === 0) {
+                $('#transactionCreate').prop('disabled', true);
+            }
             $(element).keyup(function (e) {
-                if($(this).val() <= parseInt($('.quantityAvail').eq(index).text())){
-                    $('.response').css({'display':'none'}).text('');
+                quantityAvail[index] = parseInt($('.prodQuantityStatic').eq(index).val()); //Old quantity available
+                if ((parseInt($(this).val()) <= quantityAvail[index]) || $(this).val().length === 0) { //To check if the input quantity is lower than the available product quantity
+                    if ($(this).val().length === 0) {
+                        quantityInput = 0; //quantity Input
+                        $('#transactionCreate').prop('disabled', true);
+                    } else {
+                        quantityInput = parseInt($(this).val()); //quantity Input
+                        $('#transactionCreate').prop('disabled', false);
+                    }
+                    $('.response').css({
+                        'display': 'none'
+                    }).text('');
                     totalCal = 0;
-                    quantityInput = $(this).val();
-                    quantityPrice = parseInt($('.productPrice').eq(index).text());
-                    productCal[index] = quantityInput * quantityPrice;
+                    quantityReduce = quantityAvail[index] - quantityInput; //New quantity available
+                    quantityPrice = parseInt($('.productPrice').eq(index).text()); //product price
+                    productCal[index] = quantityInput * quantityPrice; // Product of product-price and product-quantity
+                    $('.prodQuantityDynamic').eq(index).text(quantityReduce);
                     //$('#transactionTotal').text(productCal[index]);
                     //console.log(productCal.length);
                     for (var i = 0; i < productCal.length; i++) {
                         totalCal += productCal[i];
-                   }
-                   $('#transactionTotal').text(totalCal);
+                    }
+                    $('#transactionTotal').text(totalCal);
+                } else {
+                    $('.response').css({
+                        'display': 'block'
+                    }).text('Quantity Input for ' + $('.transactProdName').eq(index).text() + ' Exceeds Quantity available');
+                    $('#transactionCreate').prop('disabled', true);
                 }
-                else{
-                    $('.response').css({'display':'block'}).text('Quantity Input for '+$('.transactProdName').eq(index).text()+' Exceeds Quantity available');
-                }  
             });
-        }); 
+        });
     });
     //Select and deselect items from tables with "selectable" class
     $(".selectable").each(function (index, element) {
@@ -219,6 +264,49 @@ $(document).ready(function () {
             }
         });
     });
+    /**
+     * Desc-> Event listener to send transaction to DB
+     */
+    var transactionContent = [],
+        transactTotal;
+    $('#transactForm').submit(function (e) {
+        e.preventDefault();
+        if ($('.transaction-entry').length >= 0) {
+            $('.transaction-entry').each(function (index, element) {
+                transactionContent[index] = {
+                    product_id: "",
+                    product_quantity: "",
+                    product_quantity_pur: "",
+                    product_price: "",
+                    transaction_id:"",
+                    created_at:"",
+                    updated_at:""
+                };
+                transactionContent[index].product_id = parseInt($('.prodId').eq(index).val());
+                transactionContent[index].product_quantity = parseInt($('.prodQuantityDynamic').eq(index).html());
+                transactionContent[index].product_quantity_Pur = parseInt($('.quantityInput').eq(index).val());
+                transactionContent[index].product_price = parseInt($('.productPrice').eq(index).html());
+                transactionContent[index].transaction_id = 1;               
+            });
+            transactTotal = parseInt($('#transactionTotal').html());
+            $.ajax({
+                method: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                headers:{'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')}, 
+                url: $(this).attr('action'),
+                data: JSON.stringify([{
+                    total: transactTotal
+                }, transactionContent]),
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+           // console.log(JSON.stringify([{
+             //   total: transactTotal
+            //}, transactionContent]));
+        }
+    })
     //Select all rows in the list with the 'select all' button
     var state_2 = 0;
     $("#select-all").click(function (e) {
@@ -229,9 +317,9 @@ $(document).ready(function () {
                 $(element).addClass('selected'); //change background color of list
                 $(':checkbox').eq(index).prop('checked', true); //check input;            
             })
-            $(this).addClass('btn-primary');// change 'select-all' button color
+            $(this).addClass('btn-primary'); // change 'select-all' button color
             state_2 = 1
-        }else{
+        } else {
             $('.selectable').each(function (index, element) {
                 // element == this
                 $(element).removeClass('selected'); //reverse background color of list

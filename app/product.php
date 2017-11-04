@@ -14,4 +14,7 @@ class product extends Model
     public function category(){
         return $this->belongsTo('seekit\category','categoryId');
     }
+    public function transaction_description(){
+        return $this->hasMany('seekit\transact_desc');
+    }
 }
