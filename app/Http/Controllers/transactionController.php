@@ -5,6 +5,7 @@ namespace seekit\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Mavinoo\UpdateBatch\UpdateBatchFacade;
 use Mavinoo\UpdateBatch\UpdateBatch;
 
@@ -17,7 +18,8 @@ class transactionController extends Controller
      */
     public function index()
     {
-        return view('transaction.index');
+        $getAllTransaction = \seekit\transaction::orderBy('created_at','desc')->paginate(10);
+        return view('transaction.index')->with('queriedTransaction',$getAllTransaction);
     }
 
     /**
@@ -50,7 +52,8 @@ class transactionController extends Controller
         $transaction_name = 'transaction_'.time();
         $input_params = $entities[1];
         $prod_update = [];
-       DB::transaction(function() use ($total,$transaction_name,$input_params,$prod_update){
+      $queryDB =  DB::transaction(function() use ($total,$transaction_name,$input_params,$prod_update){
+        try{
             $getTransactionId = DB::table('transaction')->insertGetId([
                 'transaction_name'=> $transaction_name,
                 'total_price'=> $total,
@@ -67,8 +70,15 @@ class transactionController extends Controller
             $createTransactDesc = DB::table('transaction_description')->insert($input_params);
             $updateProdData = new UpdateBatch;
             $updateProdData->updateBatch('product',$prod_update,'id');
+        }
+        catch(PDOException $e){
+            return response()->json(['error'=>$e->getMessage()],409);
+        }    
+        
        });
-       return json_encode($prod_update); //json_encode($entities[0]); 
+       //return json_encode($prod_update); //json_encode($entities[0]); 
+       $data = "Transaction Successful";
+       return response()->json(['redirect'=>url()->to('/transaction')],201);
     }
 
     /**

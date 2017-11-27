@@ -66,9 +66,9 @@
                 <a href="../product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Product" data-placement="right">
-                <a href="../product/create"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="../product/create"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><sup>+</sup></a>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Category" data-placement="right">
+            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Category" data-placement="right">
                 <a href="../category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Transactions" data-placement="right">

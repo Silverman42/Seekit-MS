@@ -18,14 +18,12 @@ Route::resource('transaction', 'transactionController');
 Route::resource('product', 'productController' );
 Route::resource('category','categoryController');
 Route::get('users/', function () {
-    $products = \seekit\product::all();
-    var_dump(count($products));
-    $products->each(function($product){
-        var_dump($product->productName);
-    });
+    $products = \seekit\product::get(['productName','price','quantity']);
+    return response()->json($products);
 });
-Route::post('search/transaction', 'searchController@transactionSearch');
-Route::post('search/product', 'searchController@productSearch');
+Route::get('search/transaction', 'searchController@transactionSearch');
+Route::post('search/transproduct', 'searchController@transProductSearch');
+Route::get('search/product', 'searchController@productSearch');
 Route::get('admin', function () {
     return view('admin');
 });
@@ -35,3 +33,7 @@ Route::get('users/id', function () {
 Route::get('customer-purchase', function () {
     return view('customer-purchase');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

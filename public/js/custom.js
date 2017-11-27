@@ -57,10 +57,11 @@ $(document).ready(function () {
             url: action,
             data: data,
             success: function (response) {
-                form[0].reset();
-                $('.response').text(response).fadeIn(1000).delay(4000).fadeOut(1000);
                 if (response === 'Product details updated') {
-                    setInterval(location.reload(), 3000);
+                    $('.response').text(response).fadeIn(1000).delay(4000).fadeOut(1000);
+                    setInterval(function () {  
+                        window.location.href = $('#previous_page').val();
+                    }, 3000);
                 }
             },
             error: function () {
@@ -180,12 +181,20 @@ $(document).ready(function () {
     $('#suggestion-container').on("click", '.suggestion-box', function (e) {
         var index = $(this).index();
         for (var ch = 0; ch < chosenProduct.length; ch++) {
-            if (chosenProduct[ch] !== pEntities[index].prodId) {
+            if(parseInt(pEntities[index].prodQuantity) === 0){
+                $('.response').css({
+                    'display': 'block'
+                }).text('Product Not Available');
+            }
+            else if (chosenProduct[ch] !== pEntities[index].prodId) {
                 if (ch === chosenProduct.length - 1) {
                     $('#transaction-body').append('<tr class="transaction-entry"><td style="display:none"><input hidden value="' + pEntities[index].prodId + '" class="prodId"/><input hidden value="' + pEntities[index].prodQuantity + '" class="prodQuantityStatic"/></td><td class="transactProdName">' + pEntities[index].prodName + '</td><td><input class="form-control quantityInput" style="color:black" type="number"></td><td class="prodQuantityDynamic">' + pEntities[index].prodQuantity + '</td><td class="productPrice">' + pEntities[index].prodPrice + '</td></tr>');
                     chosenProduct[cpCount] = pEntities[index].prodId;
                     $('.suggestion-box').remove();
                     $('#transAction')[0].reset();
+                    $('.response').css({
+                        'display': 'none'
+                    }).text('');
                     cpCount++;
                 }
             } else {
@@ -194,14 +203,7 @@ $(document).ready(function () {
         }
         console.log(chosenProduct.length);
     })
-    /* Click listener to delete all transaction entries 
-     */
-    $('#delete-transact').click(function (e) {
-        e.preventDefault();
-        $('#transaction-body').empty();
-        $('#transactForm')[0].reset();
-        chosenProduct = [0];
-    })
+    
     /*Desc--> Event listener to calculate the total transactions with respect to the product quantity and price   
      */
     var quantityInput, quantityAvail = [],
@@ -246,6 +248,17 @@ $(document).ready(function () {
             });
         });
     });
+    /* Click listener to delete all transaction entries 
+     */
+    $('#delete-transact').click(function (e) {
+        e.preventDefault();
+        $('#transaction-body').empty();
+        $('#transactForm')[0].reset();
+        $('#transactionCreate').prop('disabled',true);
+        chosenProduct = [0];
+        productCal = [0];
+        $('#transactionTotal').text(0);
+    })
     //Select and deselect items from tables with "selectable" class
     $(".selectable").each(function (index, element) {
         var state = 0;
@@ -298,8 +311,22 @@ $(document).ready(function () {
                 data: JSON.stringify([{
                     total: transactTotal
                 }, transactionContent]),
-                success: function (response) {
-                    console.log(response);
+                beforeSend: function () { 
+                    $('#transaction-body').empty();
+                    $('#transactForm')[0].reset();
+                    $('#transactionCreate').prop('disabled',true); 
+                    $('.load-spinner').css({'display':'block'});
+                },
+                success: function (response,responseStatus,xhr) {
+                    if(xhr.status === 201){
+                        $('.load-spinner').css({'display':'none'});
+                        setInterval(function () {  
+                            location.reload(true);
+                        }, 1000);
+                        $('.response').css({
+                            'display': 'block'
+                        }).text('Transaction Submitted. Please wait....');    
+                    }
                 }
             });
            // console.log(JSON.stringify([{
@@ -329,4 +356,4 @@ $(document).ready(function () {
             state_2 = 0;
         };
     });
-});
+})

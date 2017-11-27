@@ -14,7 +14,7 @@ class productController extends Controller
     public function index()
     {
         //fetch all products from products table
-        $products = \seekit\product::simplePaginate(4);
+        $products = \seekit\product::paginate(4);
         return view('product.index')->with('products',$products);
     }
 
@@ -88,11 +88,12 @@ class productController extends Controller
     {
         //get the product
         $product = \seekit\product::find($id);
+        $previous_page = url()->previous();
 
         //get all category
         $categories = \seekit\category::all();
         //show the view and pass the product to it
-        return view('product.edit')->with('product',$product)->with('categories',$categories);
+        return view('product.edit')->with('product',$product)->with('categories',$categories)->with('prev_page',$previous_page);
     }
 
     /**
