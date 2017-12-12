@@ -12,7 +12,7 @@ class searchController extends Controller
             $searchItem = $request->input('searchItem');
             $searchItem = strip_tags($searchItem);
             $search = \seekit\product::where('productName','LIKE',"%$searchItem%")->take(10)->get();
-            echo $search->toJson(); 
+            echo $search->toJson();
         }
     }
     public function transactionSearch(Request $request){

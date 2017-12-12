@@ -284,6 +284,7 @@ td:nth-of-type(even)>a:hover{
     z-index: 77;
     overflow: auto;
     overflow-y: scroll;
+    overflow-x: scroll;
     -webkit-transition: display 0.5s linear 0s;
     -moz-transition: display 0.5s linear 0s;
     transition: display 0.5s linear 0s;

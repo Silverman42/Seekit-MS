@@ -12,6 +12,6 @@ class transact_desc extends Model
         return $this->belongsTo('\seekit\transaction');
     }
     public function product(){
-        return $this-belongsTo('\seekit\product');
+        return $this->belongsTo('\seekit\product');
     }
 }

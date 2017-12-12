@@ -22,7 +22,7 @@ Route::get('users/', function () {
     return response()->json($products);
 });
 Route::get('search/transaction', 'searchController@transactionSearch');
-Route::post('search/transproduct', 'searchController@transProductSearch');
+Route::get('search/transproduct', 'searchController@transProductSearch');
 Route::get('search/product', 'searchController@productSearch');
 Route::get('admin', function () {
     return view('admin');
@@ -33,7 +33,6 @@ Route::get('users/id', function () {
 Route::get('customer-purchase', function () {
     return view('customer-purchase');
 });
-
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('restock/store','restockProductController@store')->name('restock.store');
+Route::get('restock/view/','restockProductController@view')->name('restock.view');

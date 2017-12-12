@@ -136,13 +136,14 @@ $(document).ready(function () {
         });
     }
 
-    /*Desc -- Keyup event listener to search for suggestions through ajax request
+    /*
+    * @description: Keyup event listener to search for suggestions through ajax request
      */
     $('#transProductSearch').on('keyup', function (e) {
         e.preventDefault();
         if ($(this).val() !== "") {
             $.ajax({
-                type: "POST",
+                type: "GET",
                 url: $('#transAction').attr('action'),
                 data: $('#transAction').serialize(),
                 success: function (response) {

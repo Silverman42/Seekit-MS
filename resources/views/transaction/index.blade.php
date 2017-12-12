@@ -61,41 +61,39 @@
         </div>
         <!-- /.navbar-collapse -->
     </nav>
-    <div class="actionView">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 cover-4">
-                <div class="col-md-12">
-                    <div class="col-sm-11">
-                        <legend id="av-legend">New Transaction</legend>
-                    </div>
-                    <div class="col-sm-1">
-                        <button type="button" id="actionView-zoomOut" class="btn btn-default" data-toggle="tooltip" title="Exit" data-placement="right">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
+    <div class="modal fade" id="modal-id">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><legend>Transaction id : <span id="av-legend"></span> </legend></h4>
                 </div>
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Quantity purchased</th>
-                                    <th>Quantity Available</th>
-                                    <th>Price</th>
-                                </tr>
-                            </thead>
-                            <tbody id="av-transaction-body">
-                            </tbody>
-                            <tfoot>
-                                <tr class="tfoot">
-                                    <td>Total</td>
-                                    <td id="av-transactionTotal"></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" data-av-url="{{URL::to('transaction/')}}">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity purchased</th>
+                                        <th>Quantity Available</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="av-transaction-body">
+                                </tbody>
+                                <tfoot>
+                                    <tr class="tfoot">
+                                        <td>Total</td>
+                                        <td id="av-transactionTotal"></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="load-spinner-2" data-spinner-count="two">
                     </div>
                 </div>
             </div>
@@ -205,7 +203,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="av-create-container">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -221,10 +219,19 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <button id="transactPager" style="margin:auto;display: block" type="button" data-toggle="tooltip" title="Next" data-placement="bottom" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                    </button>
-                    <div class="load-spinner-2">
+                    <div class="col-xs-6">
+                        <button id="transactPagerBack" style="margin:auto;display: block" type="button" data-toggle="tooltip" title="Previous" data-placement="bottom" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button id="transactPagerFront" style="margin:auto;display: block" type="button" data-toggle="tooltip" title="Next" data-placement="bottom" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="load-spinner-2">
+                        </div>
                     </div>
                 </div>
             </div>

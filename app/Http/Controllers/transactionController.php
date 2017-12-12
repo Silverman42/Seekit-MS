@@ -89,7 +89,9 @@ class transactionController extends Controller
      */
     public function show($id)
     {
-        return view('transaction.show');
+        $transaction_desc = \seekit\transact_desc::with(['product'=>function($q){ $q->select(['id','productName']);}])
+        ->where('transaction_id',$id)->get(['product_id','product_quantity','product_quantity_pur','product_price']);
+        return response()->json($transaction_desc);
     }
 
     /**
