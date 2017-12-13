@@ -17,4 +17,7 @@ class product extends Model
     public function transaction_description(){
         return $this->hasMany('seekit\transact_desc');
     }
+    public function product_restock(){
+        return $this->hasMany('seekit\productRestock');
+    }
 }

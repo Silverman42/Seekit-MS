@@ -3,6 +3,7 @@
 namespace seekit\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class searchController extends Controller
 {
@@ -10,9 +11,23 @@ class searchController extends Controller
     public function transProductSearch(Request $request){
         if (!empty($request->input('searchItem'))) {
             $searchItem = $request->input('searchItem');
-            $searchItem = strip_tags($searchItem);
-            $search = \seekit\product::where('productName','LIKE',"%$searchItem%")->take(10)->get();
-            echo $search->toJson();
+            if($request->search_param == 1){
+                $searchItem = strip_tags($searchItem);
+                $search = \seekit\productRestock::whereHas('product',function($query) use ($searchItem){  
+                    $query->where("productName","LIKE","%$searchItem%");
+                })->orWhere('expiry','=',null)
+                ->where('expiry','>=',Carbon::now())
+                ->with('product')->take(10)->get();
+                return response()->json($search);
+            }
+            elseif ($request->search_param == 2) {
+                $search = \seekit\productRestock::with('product')->where('batch_id','LIKE',"%$searchItem%")->take(10)->get();
+                return response()->json($search);
+            }
+            elseif ($request->search_param == 3) {
+                $search = \seekit\productRestock::with('product')->where('vendor','LIKE',"%$searchItem%")->take(10)->get();
+                return response()->json($search);
+            }
         }
     }
     public function transactionSearch(Request $request){

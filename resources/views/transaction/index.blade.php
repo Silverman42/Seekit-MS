@@ -61,6 +61,7 @@
         </div>
         <!-- /.navbar-collapse -->
     </nav>
+    <!--Transaction Description Modal -->
     <div class="modal fade" id="modal-id">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -74,6 +75,8 @@
                                 <thead>
                                     <tr>
                                         <th>Product</th>
+                                        <th>Batch_id</th>
+                                        <th>Vendor</th>
                                         <th>Quantity purchased</th>
                                         <th>Quantity Available</th>
                                         <th>Price</th>
@@ -84,9 +87,11 @@
                                 <tfoot>
                                     <tr class="tfoot">
                                         <td>Total</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                         <td id="av-transactionTotal"></td>
-                                        <td></td>
-                                        <td></td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -130,13 +135,26 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <form method="POST" action="{{URL::to('/search/transproduct')}}" id="transAction">
+                <form method="POST" action="{{URL::to('/search/transproduct')}}" id="transAction">
                     {{ csrf_field() }}
+                    <div class="col-md-8">
                         <div class="form-group">
-                            <input type="text" name="searchItem" id="transProductSearch" class="form-control" value="" title="" placeholder="Search product">
-                            <div id="suggestion-container"></div>
+                            <input type="text" name="searchItem" id="transProductSearch" class="form-control" value="" title="" placeholder="Search according to value of the select box">
                         </div>
-                    </form>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select name="search_param" class="form-control">
+                                <option value="1">Product Name</option>
+                                <option value="2">Batch ID</option>
+                                <option value="3">Vendor</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div id="suggestion-container"></div>
+                    </div>
+                </form>
                 </div>
                 <div class="col-md-12">
                     <form id="transactForm" action="{{URL::to('/transaction')}}">
@@ -146,6 +164,8 @@
                                     <thead>
                                         <tr>
                                             <th>Product</th>
+                                            <th>Batch_id</th>
+                                            <th>Expiry Date</th>
                                             <th>Quantity purchased</th>
                                             <th>Quantity Available</th>
                                             <th>Price</th>
@@ -156,24 +176,26 @@
                                     <tfoot>
                                         <tr class="tfoot">
                                             <td>Total</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td id="transactionTotal"></td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
                         </div>
                         <div class="col-md-12" style="text-align:center">
-                            <button id="transactionCreate" disabled="disabled" style="margin:auto;display: block" type="submit" data-toggle="tooltip"
+                            <button id="transactionCreate" disabled="disabled" style="margin:auto;display:  block" data-button-id="submitTransaction" type="submit" data-toggle="tooltip"
                                 title="Create transaction" data-placement="right" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
-                            <div class="load-spinner">
+                            <div class="load-spinner-2" data-spinner-id="submitTransaction">
                             </div>
                         </div>
                         <div class="col-md-12" style="text-align:center">
-                            <p class="response"></p>
+                            <p class="response" data-response-id="submitTransaction"></p>
                         </div>    
                     </form>
                 </div>
@@ -230,7 +252,7 @@
                         </button>
                     </div>
                     <div class="col-xs-12">
-                        <div class="load-spinner-2">
+                        <div class="load-spinner-2" data-spinner-id="transactHistoryReload">
                         </div>
                     </div>
                 </div>

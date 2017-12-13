@@ -63,13 +63,13 @@ class transactionController extends Controller
                 $input_params[$i]['transaction_id'] = $getTransactionId;
                 $input_params[$i]['updated_at'] = Carbon::now();
                 $input_params[$i]['created_at'] = Carbon::now();
-                $prod_update[$i]['id'] = $input_params[$i]['product_id'];
+                $prod_update[$i]['id'] = $input_params[$i]['product_restock_id'];
                 $prod_update[$i]['quantity'] = $input_params[$i]['product_quantity'];
                 $prod_update[$i]['updated_at'] = Carbon::now();
             };
             $createTransactDesc = DB::table('transaction_description')->insert($input_params);
             $updateProdData = new UpdateBatch;
-            $updateProdData->updateBatch('product',$prod_update,'id');
+            $updateProdData->updateBatch('product_restock',$prod_update,'id');
         }
         catch(PDOException $e){
             return response()->json(['error'=>$e->getMessage()],409);
@@ -89,8 +89,8 @@ class transactionController extends Controller
      */
     public function show($id)
     {
-        $transaction_desc = \seekit\transact_desc::with(['product'=>function($q){ $q->select(['id','productName']);}])
-        ->where('transaction_id',$id)->get(['product_id','product_quantity','product_quantity_pur','product_price']);
+        $transaction_desc = \seekit\transact_desc::with(['product'=>function($q){ $q->select(['id','productName']);},'product_restock'=>function($q){ $q->select(['id','batch_id','Vendor']);}])
+        ->where('transaction_id',$id)->get(['product_id','product_restock_id','product_quantity','product_quantity_pur','product_price']);
         return response()->json($transaction_desc);
     }
 

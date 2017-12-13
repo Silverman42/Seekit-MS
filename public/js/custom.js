@@ -130,16 +130,21 @@ $(document).ready(function () {
             // element == this
             $(document).on('click', element, function (e) {
 
-                $('#transaction-body').append('<tr class="transaction-entry"><input hidden class="prodId" value="' + arr[index].id + '"/><td>' + arr[index].prodName + '</td><td><input class="quantityInput" style="color:black" type="number"></td><td>' + arr[index].prodQuantity + '</td><td>' + arr[index].prodPrice + '</td></tr>');
+                $('#transaction-body').append('<tr class="transaction-entry"><input hidden class="prod_restock_id" value="' + arr[index].id + '"/><td>' + arr[index].prodName + '</td><td><input class="quantityInput" style="color:black" type="number"></td><td>' + arr[index].prodQuantity + '</td><td>' + arr[index].prodPrice + '</td></tr>');
                 $(selector).remove();
             })
         });
     }
-
+    /**
+     * @description: Disable default action of form for product search box 
+     */
+    $('#transAction').submit(function (e) {  
+        e.preventDefault();
+    })
     /*
     * @description: Keyup event listener to search for suggestions through ajax request
      */
-    $('#transProductSearch').on('keyup', function (e) {
+     $('#transProductSearch').on('keyup', function (e) {
         e.preventDefault();
         if ($(this).val() !== "") {
             $.ajax({
@@ -148,23 +153,28 @@ $(document).ready(function () {
                 data: $('#transAction').serialize(),
                 success: function (response) {
                     $(".suggestion-box").remove();
+                    console.log(response);
                     pEntities = [];
-                    response = jQuery.parseJSON(response);
                     $.each(response, function (indexInArray, value) {
                         $("#suggestion-container").append($('<div>', {
                             class: "suggestion-box",
-                            text: value.productName
+                            text: value.product.productName+" ("+value.batch_id+") ("+ value.Vendor +")"
                         }));
                         pEntities[indexInArray] = {
                             prodQuantity: "",
-                            prodId: "",
+                            prod_restock_id: "",
+                            batchId:"",
+                            expiryDate:"",
                             prodPrice: "",
                             prodName: ""
                         };
                         pEntities[indexInArray].prodQuantity = value.quantity;
-                        pEntities[indexInArray].prodId = value.id;
+                        pEntities[indexInArray].prod_restock_id = value.id;
+                        pEntities[indexInArray].batchId = value.batch_id;
+                        pEntities[indexInArray].expiryDate = value.expiry;
                         pEntities[indexInArray].prodPrice = value.price;
-                        pEntities[indexInArray].prodName = value.productName;
+                        pEntities[indexInArray].prod_id = value.product.id;
+                        pEntities[indexInArray].prodName = value.product.productName;
                     });
                 },
                 error: function () {
@@ -187,16 +197,17 @@ $(document).ready(function () {
                     'display': 'block'
                 }).text('Product Not Available');
             }
-            else if (chosenProduct[ch] !== pEntities[index].prodId) {
+            else if (chosenProduct[ch] !== pEntities[index].prod_restock_id) {
                 if (ch === chosenProduct.length - 1) {
-                    $('#transaction-body').append('<tr class="transaction-entry"><td style="display:none"><input hidden value="' + pEntities[index].prodId + '" class="prodId"/><input hidden value="' + pEntities[index].prodQuantity + '" class="prodQuantityStatic"/></td><td class="transactProdName">' + pEntities[index].prodName + '</td><td><input class="form-control quantityInput" style="color:black" type="number"></td><td class="prodQuantityDynamic">' + pEntities[index].prodQuantity + '</td><td class="productPrice">' + pEntities[index].prodPrice + '</td></tr>');
-                    chosenProduct[cpCount] = pEntities[index].prodId;
+                    $('#transaction-body').append('<tr class="transaction-entry"><td style="display:none"><input hidden value="' + pEntities[index].prod_restock_id + '" class="prod_restock_id"/><input hidden value="' + pEntities[index].prod_id + '" class="prod_id"/><input hidden value="' + pEntities[index].prodQuantity + '" class="prodQuantityStatic"/></td><td class="transactProdName">' + pEntities[index].prodName + '</td><td>'+pEntities[index].batchId+'</td><td>'+pEntities[index].expiryDate+'</td><td><input class="form-control quantityInput" style="color:black" type="number"></td><td class="prodQuantityDynamic">' + pEntities[index].prodQuantity + '</td><td class="productPrice">' + pEntities[index].prodPrice + '</td></tr>');
+                    chosenProduct[cpCount] = pEntities[index].prod_restock_id;
                     $('.suggestion-box').remove();
                     $('#transAction')[0].reset();
                     $('.response').css({
                         'display': 'none'
                     }).text('');
                     cpCount++;
+                    console.log($('.prod_id').val());
                 }
             } else {
                 break;
@@ -288,6 +299,7 @@ $(document).ready(function () {
         if ($('.transaction-entry').length >= 0) {
             $('.transaction-entry').each(function (index, element) {
                 transactionContent[index] = {
+                    product_restock_id: "",
                     product_id: "",
                     product_quantity: "",
                     product_quantity_pur: "",
@@ -296,11 +308,12 @@ $(document).ready(function () {
                     created_at:"",
                     updated_at:""
                 };
-                transactionContent[index].product_id = parseInt($('.prodId').eq(index).val());
+                transactionContent[index].product_id = parseInt($('.prod_id').eq(index).val());
+                transactionContent[index].product_restock_id = parseInt($('.prod_restock_id').eq(index).val());
                 transactionContent[index].product_quantity = parseInt($('.prodQuantityDynamic').eq(index).html());
                 transactionContent[index].product_quantity_Pur = parseInt($('.quantityInput').eq(index).val());
                 transactionContent[index].product_price = parseInt($('.productPrice').eq(index).html());
-                transactionContent[index].transaction_id = 1;               
+                transactionContent[index].transaction_id = 0;               
             });
             transactTotal = parseInt($('#transactionTotal').html());
             $.ajax({
@@ -316,27 +329,84 @@ $(document).ready(function () {
                     $('#transaction-body').empty();
                     $('#transactForm')[0].reset();
                     $('#transactionCreate').prop('disabled',true); 
-                    $('.load-spinner').css({'display':'block'});
+                    $('.load-spinner-2[data-spinner-id=submitTransaction]').css({'display':'block'});
+                    $('button[data-button-id=submitTransaction]').css({'display':'none'});
                 },
                 success: function (response,responseStatus,xhr) {
                     if(xhr.status === 201){
-                        $('.load-spinner').css({'display':'none'});
-                        setInterval(function () {  
-                            location.reload(true);
-                        }, 1000);
-                        $('.response').css({
+                        $('#transactionCreate').prop('disabled',true);
+                        chosenProduct = [0];
+                        productCal = [0];
+                        $('#transactionTotal').text(0);
+                        $('.load-spinner-2[data-spinner-id=submitTransaction]').css({'display':'none'});
+                        $('button[data-button-id=submitTransaction]').css({'display':'block'});
+                        $('.response[data-response-id=submitTransaction]').css({
                             'display': 'block'
-                        }).text('Transaction Submitted. Please wait....');    
+                        }).text('Transaction Submitted. Please wait....').delay(4000).fadeOut(1000);    
                     }
                 }
             });
-           // console.log(JSON.stringify([{
-             //   total: transactTotal
-            //}, transactionContent]));
         }
+        $("#transactBody").trigger("reload:transactHistory");
+    });
+    /**
+     * @description: Reload Transaction History
+     * @event: {object} reload:transactionHistory
+     */
+     
+    $("#transactBody").on('reload:transactHistory', function (e) {  
+        e.preventDefault();
+        $(this).empty();
+        transactPagerCount = 0;
+        tabContent = null;
+        historyRowCount = 0;
+        if ($('body').attr('data-current-page') === "transaction") {
+            setTimeout(function () {
+                $.ajax({
+                    method: 'GET',
+                    url: $('input[name="searchTransact"]').attr('data-custom-transURL'),
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                    },
+                    data: "?searchTransact=" + $('input[name="searchTransact"]').val() + "&searchParam=" + $('select[name="searchTransactParam"]').val() + "&page=" + transactPagerCount,
+                    beforeSend: function () {
+                        $("#transactPager").css({
+                            'display': 'none'
+                        });
+                        $('.load-spinner-2').css({
+                            'display': 'block'
+                        });
+                    },
+                    success: function (response) {
+ 
+                        console.log(response);
+                        $("#transactPager").css({
+                            'display': 'block'
+                        });
+                        $('.load-spinner-2').css({
+                            'display': 'none'
+                        });
+                        $.each(response, function (index, value) {
+                            $('#transactBody').append('<tr><td><a href="#modal-id" class="viewTransact" data-row-id="' + historyRowCount + '" data-transact-id="' + value.id + '" style="margin:auto;display:block" data-toggle="modal"><button data-toggle="tooltip" title="View" data-placement="bottom" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button></a></td><td><a href=""><button style="margin:auto;display: block" href="www.google.com" data-toggle="tooltip" title="Update" data-placement="bottom" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></a></td><td data-row-id="' + historyRowCount + '" class="transactionName">' + value.transaction_name + '</td><td data-row-id="' + historyRowCount + '">' + value.created_at + '</td><td data-row-id="' + historyRowCount + '" class="transactionTot">' + value.total_price + '</td></tr>');
+                            historyRowCount++;
+                        });
+ 
+                        //tabContent = null;
+                        if (response.length === 0) {
+                            $(this).prop("disabled", true);
+                        } else {
+                            $('#transactPager').prop("disabled", false);
+                        }
+                    },
+                    error: function () {
+                        console.log('Could Not Connect');
+                    }
+                });
+            }, 1000);
+        };
     })
     //Select all rows in the list with the 'select all' button
-    var state_2 = 0;
+    /*var state_2 = 0;
     $("#select-all").click(function (e) {
         e.preventDefault();
         if (state_2 === 0) {
@@ -356,5 +426,6 @@ $(document).ready(function () {
             $(this).removeClass('btn-primary'); //reverse 'select-all' button color
             state_2 = 0;
         };
-    });
+    });*/
+
 })

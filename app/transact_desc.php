@@ -14,4 +14,7 @@ class transact_desc extends Model
     public function product(){
         return $this->belongsTo('\seekit\product');
     }
+    public function product_restock(){
+        return $this->belongsTo('\seekit\productRestock');
+    }
 }

@@ -20,7 +20,7 @@
                        $("#transactPager").css({
                            'display': 'none'
                        });
-                       $('.load-spinner-2').css({
+                       $('.load-spinner-2[data-spinner-id=transactHistoryReload]').css({
                            'display': 'block'
                        });
                    },
@@ -30,7 +30,7 @@
                        $("#transactPager").css({
                            'display': 'block'
                        });
-                       $('.load-spinner-2').css({
+                       $('.load-spinner-2[data-spinner-id=transactHistoryReload]').css({
                            'display': 'none'
                        });
                        $.each(response, function (index, value) {
@@ -66,7 +66,7 @@
                    $("#transactPagerFront, #transactPagerBack").css({
                        'display': 'none'
                    });
-                   $('.load-spinner-2').css({
+                   $('.load-spinner-2[data-spinner-id=transactHistoryReload]').css({
                        'display': 'block'
                    });
                },
@@ -75,7 +75,7 @@
                    $("#transactPagerFront, #transactPagerBack").css({
                        'display': 'block'
                    });
-                   $('.load-spinner-2').css({
+                   $('.load-spinner-2[data-spinner-id=transactHistoryReload]').css({
                        'display': 'none'
                    });
                    //tabContent = null;
@@ -112,7 +112,7 @@
                        $("#transactPagerFront, #transactPagerBack").css({
                            'display': 'none'
                        });
-                       $('.load-spinner-2').css({
+                       $('.load-spinner-2[data-spinner-id=transactHistoryReload]').css({
                            'display': 'block'
                        });
                    },
@@ -121,7 +121,7 @@
                        $("#transactPagerFront, #transactPagerBack").css({
                            'display': 'block'
                        });
-                       $('.load-spinner-2').css({
+                       $('.load-spinner-2[data-spinner-id=transactHistoryReload]').css({
                            'display': 'none'
                        });
                        //tabContent = null;
@@ -159,7 +159,7 @@
                    $("#transactPager").css({
                        'display': 'none'
                    });
-                   $('.load-spinner-2').css({
+                   $('.load-spinner-2[data-spinner-id=transactHistoryReload]').css({
                        'display': 'block'
                    });
                },
@@ -169,7 +169,7 @@
                    $("#transactPager").css({
                        'display': 'block'
                    });
-                   $('.load-spinner-2').css({
+                   $('.load-spinner-2[data-spinner-id=transactHistoryReload]').css({
                        'display': 'none'
                    });
                    $.each(response, function (index, value) {
@@ -406,7 +406,7 @@
                    });
                    console.log(response);
                    $.each(response, function (indexInArray, value) {
-                       $('#av-transaction-body').append($('<tr><td>' + value.product.productName + '</td><td>' + value.product_quantity_pur + '</td><td>' + value.product_quantity + '</td><td>' + value.product_price + '</td></tr>'))
+                       $('#av-transaction-body').append($('<tr><td>' + value.product.productName + '</td><td>' + value.product_restock.batch_id + '</td><td>' + value.product_restock.Vendor + '</td><td>' + value.product_quantity_pur + '</td><td>' + value.product_quantity + '</td><td>' + value.product_price + '</td></tr>'))
                    });
                },
                error: function (param) {

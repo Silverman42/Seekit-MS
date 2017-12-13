@@ -321,14 +321,15 @@ td:nth-of-type(even)>a:hover{
 /*Suggestion boox*/
 #suggestion-container{
     display: block;
-    width: 810px;
+    width: 100%;
     position: absolute;
+    right: 0px;
     z-index: 4;
 }
 .suggestion-box{
     display: block;
     position: relative;
-    background-color: white;
+    background-color: rgb(229, 226, 226);
     color: black;
     width: 100%;
     padding: 10px 10px;
