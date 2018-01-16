@@ -57,9 +57,9 @@
                 <a href="{{URL::to('/product')}}"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Product" data-placement="right">
-                <a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><sup>+</sup></a>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Category" data-placement="right">
+            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Category" data-placement="right">
                 <a href="/category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Transactions" data-placement="right">
@@ -70,7 +70,7 @@
             </div>
         </div>
        <div class="col-xs-2 col-sm-2 col-md-6 col-lg-8 col-lg-push-2 cover-4">
-            <div class="cover-3 ">
+            
                 <form method="POST" action="{{URL::to('/product/')}}" class="form-horizontal" id="productSubmit" role="form">
                     <div class="form-group">
                         <legend>New Product</legend>
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                 </form>
-            </div>
+        
         </div>
     </div>
     <!-- jQuery -->

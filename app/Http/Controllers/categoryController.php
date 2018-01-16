@@ -3,6 +3,7 @@
 namespace seekit\Http\Controllers;
 
 use Illuminate\Http\Request;
+use seekit\Http\Controllers\escapeCharController;
 
 class categoryController extends Controller
 {
@@ -11,15 +12,32 @@ class categoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        //for ajax requests
+        
+        $interval = 10;
+        $page = $request->paginate * $interval;
+        if($request->ajax()){
+            if(!isset($request->searchParam)){
+                $categories = \seekit\category::skip($page)->take($interval)->orderBy('created_at','desc')->get();   
+                return response()->json($categories);
+            }
+            else{
+                # code...
+                $categories = \seekit\category::where('categoryName','LIKE',"%$request->searchParam%")->skip($page)->take($interval)->orderBy('created_at','desc')->get();
+                return response()->json($categories);
+            }
+        }
         //fetch all categories from category table
-        $categories = \seekit\category::get();
-        return view('category.index')->with('categories',$categories);
+        else{
+            $categories = \seekit\category::get();
+            return view('category.index')->with('categories',$categories);
+        }
     }
 
     /**
-     * Show the form for creating a new resource.
+  $   * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -36,26 +54,25 @@ class categoryController extends Controller
      */
     public function store(Request $request)
     {
-        $categories = \seekit\category::where('categoryName',$request['name'])
+        $mod_request = escapeCharController::escape($request['name']);  //htmlspecialchars(,ENT_COMPAT,'UTF-8'); 
+        $categories = \seekit\category::where('categoryName',$mod_request)
                 ->pluck('categoryName');
         if (count($categories->toArray())>0) {
             # To check if product name already exist on database
-            $err = "Category ".$request['name']." already exist";
-            echo $err;
-            exit;
+            $err = "Category ".$mod_request." already exist";
+            return response()->json($err,200);
         }
-        elseif (empty($request['name'])) {
+        elseif (empty($mod_request)) {
             # To Check if request is empty
             $err = "Input is empty";
-            echo $err;
-            exit;
+            return response()->json($err,201);
         }
         //create new category
         $input = new \seekit\category;
-        $input->categoryName = $request['name'];
+        $input->categoryName = $mod_request;
         $input->save();
-        $success = "Category created" ;
-        echo $success;
+        $success = 'Submit successful';
+        return response()->json($success,202);
     }
 
     /**
@@ -97,20 +114,17 @@ class categoryController extends Controller
         if (count($categories->toArray())>0) {
             # To check if product name already exist on database
             $err = "Category ".$request['name']." already exist";
-            echo $err;
-            exit;
+            return response()->json($err);
         }
         elseif (empty($category)) {
             # To Check if request is empty
             $err = "Input is empty";
-            echo $err;
-            exit;
+            return response()->json($err);
         }
         $updateCategory = \seekit\category::where('id',$id)
                             ->update(array('categoryName'=>$category));
             $success = "Category Update successful";
-            echo $success;
-            exit;
+            return response()->json($success);
     }
 
     /**
