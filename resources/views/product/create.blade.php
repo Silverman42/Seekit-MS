@@ -70,7 +70,7 @@
             </div>
         </div>
        <div class="col-xs-2 col-sm-2 col-md-6 col-lg-8 col-lg-push-2 cover-4">
-            <div class="cover-3 ">
+            
                 <form method="POST" action="{{URL::to('/product/')}}" class="form-horizontal" id="productSubmit" role="form">
                     <div class="form-group">
                         <legend>New Product</legend>
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                 </form>
-            </div>
+        
         </div>
     </div>
     <!-- jQuery -->

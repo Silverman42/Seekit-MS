@@ -35,62 +35,23 @@ $(document).ready(function () {
             type: method,
             url: action,
             data: data,
+            beforeSend:function () {  
+                $(".load-spinner-2[data-spinner-id=submitProduct]").css('display','block');
+                $("button[data-button-id=submitProduct]").css('display','none');
+            },
             success: function (response) {
                 form[0].reset();
-                $('.response').text(response).fadeIn(1000).delay(4000).fadeOut(1000);
+                $(".load-spinner-2[data-spinner-id=submitProduct]").css('display','none');
+                $("button[data-button-id=submitProduct]").css('display','block');
+                $('.response[data-response-id=submitProduct]').text(response).fadeIn(1000).delay(4000).fadeOut(1000);
             },
             error: function () {
                 console.log(action);
             }
         });
     });
-    //Update products
-    $("#productUpdate").submit(function (e) {
-        e.preventDefault();
-        var method = $(this).attr('method');
-        var action = $(this).attr('action');
-        var data = $(this).serialize();
-        var form = $(this);
-
-        $.ajax({
-            type: method,
-            url: action,
-            data: data,
-            success: function (response) {
-                if (response === 'Product details updated') {
-                    $('.response').text(response).fadeIn(1000).delay(4000).fadeOut(1000);
-                    setInterval(function () {  
-                        window.location.href = $('#previous_page').val();
-                    }, 3000);
-                }
-            },
-            error: function () {
-                console.log(action);
-            }
-        });
-    });
-    //Create category
-    $("#categorySubmit").submit(function (e) {
-        e.preventDefault();
-        var method = $(this).attr('method');
-        var action = $(this).attr('action');
-        var data = $(this).serialize();
-        var form = $(this);
-
-        $.ajax({
-            type: method,
-            url: action,
-            data: data,
-            success: function (response) {
-                form[0].reset();
-                $('.response').text(response).fadeIn(1000).delay(4000).fadeOut(1000);
-            },
-            error: function () {
-                console.log(action);
-            }
-        });
-    });
-    //Create category
+    //Update category
+    /*
     $("#categoryUpdate").submit(function (e) {
         e.preventDefault();
         var method = $(this).attr('method');
@@ -115,6 +76,7 @@ $(document).ready(function () {
 
         });
     });
+    */
     //Search product in DB for transaction
     var pEntities = [];
 

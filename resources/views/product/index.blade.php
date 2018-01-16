@@ -56,9 +56,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="price" class="col-sm-2 control-label">Price: </label>
+                            <label for="price" class="col-sm-2 control-label">Cost Price: </label>
                             <div class="col-sm-10">
-                                <input type="number" name="price" id="price" class="form-control" value="" required="required" title="">
+                                <input type="number" name="costPrice" id="price" class="form-control" value="" required="required" title="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="col-sm-2 control-label">Selling Price: </label>
+                            <div class="col-sm-10">
+                                <input type="number" name="sellingPrice" id="price" class="form-control" value="" required="required" title="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -86,27 +92,23 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" data-restock_list_url="{{URL::to('restock/view')}}"><legend>Restock Batches for <span class="restockProdName"></legend></span> </h4>
+                    <h4 class="modal-title" data-modal-title-id="restockBatchList" data-restock_list_url="{{URL::to('restock/view')}}"><legend>Restock Batches for <span class="restockProdName"></legend></span> </h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" data-modal-id="restockBatchList">
                     <div class="container-fluid">
-                        <div class="row" style="padding-bottom: 20px">
-                            <div class="col-xs-3"><b>Product Description : </b></div>
-                            <div class="col-xs-9">Labore duis incididunt cupidatat proident voluptate.</div>
-                        </div>
                         <div class="row">
                                 <div class="col-xs-9">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" value="" required="required" pattern="" title="" placeholder="Search according to value of the select box">
+                                        <input type="text" class="form-control" name="searchRestockBatch" id="searchRestockBatch" value="" required="required" pattern="" title="" placeholder="Search according to value of the select box">
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
                                     <div class="form-group">
-                                        <select class="form-control">
-                                            <option>Batch Id</option>
-                                            <option>Expiry Date</option>
-                                            <option>Vendor</option>
-                                            <option>Quantity</option>
+                                        <select class="form-control" name="searchRestockParam">
+                                            <option value="1">Batch Id</option>
+                                            <option value="2">Expiry Date</option>
+                                            <option value="3">Vendor</option>
+                                            <option value="4">Quantity</option>
                                         </select>
                                     </div>
                                 </div>
@@ -125,8 +127,8 @@
                                                 <th>Restock Date</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            
+                                        <tbody id="restockListBody">
+                                            <tr><td>name</td><td>name</td><td>name</td><td>name</td><td>name</td><td>name</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -221,7 +223,7 @@
                                     <th></th>
                                     <th>Product</th>
                                     <th>Category</th>
-                                    <th>Quantity</th>
+                                    <th>Product Description</th>
                                 </tr>
                             </thead>
                             <tbody id="prodBody">

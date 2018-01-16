@@ -3,6 +3,7 @@
 namespace seekit\Http\Controllers;
 
 use Illuminate\Http\Request;
+use seekit\Http\Controllers\escapeCharController;
 
 class productController extends Controller
 {
@@ -11,11 +12,27 @@ class productController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //fetch all products from products table
-        $products = \seekit\product::paginate(4);
-        return view('product.index')->with('products',$products);
+        $interval = 10;
+        $paginator = $request->paginate * 10;
+
+        if($request->ajax()){//Check if request is an AJAX request
+            if(!isset($request->searchParam)){
+                $products = \seekit\product::with('category')->skip($paginator)->take($interval)->get();
+                return response()->json($products);
+            }
+            else {
+                $searchParam = $request->searchParam;
+                $products  = \seekit\product::whereHas('category',function($query) use ( $searchParam ){ $query->where('categoryName','LIKE',"%$searchParam%");})->orWhere('productName','LIKE',"%$searchParam%")->with('category')->skip($paginator)->take($interval)->get();
+                return response()->json($products);
+            }
+        }
+        else{
+            //fetch all products from products table
+            return view('product.index');
+        }
+        
     }
 
     /**
@@ -26,8 +43,6 @@ class productController extends Controller
     public function create()
     {
         //fetch all categories from category table
-        $categories = \seekit\category::get();
-        return view('product.create')->with('categories',$categories);
     }
 
     /**
@@ -37,14 +52,17 @@ class productController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $requests)
-    {
-        $products = \seekit\product::where('productName',$requests['productName'])
+    {   $mod_product = escapeCharController::escape($requests['productName']);
+        $products = \seekit\product::where('productName',$mod_product)
                                     ->pluck('productName');
         if (count($products->toArray())>0) {
             # To check if product name already exist on database
             $err = "Product Name already exist";
             echo $err;
             exit;
+        }
+        elseif(!is_numeric($requests['productCategory'])){
+            return response('Category Not Selected');
         }
         foreach ($requests as $request) {
             if(($request == 'productQuantity' && is_nan($request)) || ($request == 'productPrice' && is_nan($request))){
@@ -59,12 +77,10 @@ class productController extends Controller
         $product = new \seekit\product;
         $product->productName = strip_tags($requests['productName']);
         $product->categoryId = strip_tags($requests['productCategory']);
-        $product->price = strip_tags($requests['productPrice']);
-        $product->quantity = strip_tags($requests['productQuantity']);
+        $product->product_desc = strip_tags($requests['productDesc']);
         $product->save();   
         $success = "Product created";
-        echo $success;
-        exit;
+        return response($success);
     }
 
     /**
@@ -109,28 +125,18 @@ class productController extends Controller
                                     ->pluck('productName');
         if (count($products->toArray())>1) {
             # To check if product name already exist on database more than once
-            $err = "Product Name already exist";
-            echo $err;
-            exit;
-        }
-        foreach ($requests as $request) {
-            if(($request == 'productQuantity' && is_nan($request)) || ($request == 'productPrice' && is_nan($request))){
-                # To check if price and quantity inputs are numbers 
-                $err = "Quantity or price Input is not a number";
-                echo $err;
-                exit;
-            }
+            $err = "Product Name already exist, try Again";
+            return response()->json($err);
         }
         # Update product if all conditions above are false
         $productName = strip_tags($requests['productName']);
         $categoryId = strip_tags($requests['productCategory']);
-        $price = strip_tags($requests['productPrice']);
-        $quantity = strip_tags($requests['productQuantity']);
+        $productDesc = strip_tags($requests['productDesc']);
         $product = \seekit\product::where("id",$id)
-                                    ->update(array("productName"=>$productName,"categoryId"=>$categoryId,"price"=>$price,"quantity"=>$quantity));
+                                    ->update(array("productName"=>$productName,"categoryId"=>$categoryId,"product_desc"=>$productDesc));
    
         $success = "Product details updated";
-        echo $success;
+        return response()->json($success);
     }
 
     /**

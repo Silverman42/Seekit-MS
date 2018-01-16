@@ -19,82 +19,67 @@
 </head>
 
 <body>
-    
-    <div class="col-lg-8 col-lg-push-2 cover-4" id="top">
-        <div class="cover-3 ">
-            <div class="col-sm-10">
-                
-            </div>
-            <div class="col-sm-2">
-                <button type="button" id="select-all" class="btn btn-default" data-toggle="tooltip" title="Select All products" data-placement="right">
-                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                </button>
-            </div>
-            <div class="col-sm-8">
-                <div class="form-group">
-                    <input type="text" name="" id="input1/(\w+)/\u\1/g" class="form-control" value="" required="required" pattern="" title=""
-                        placeholder="Search according to value of the select box">
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <select class="form-control">
-                        <option value="1">Product</option>
-                        <option value="2">Category</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-1">
-                <button type="submit" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button>
-            </div>
-            <div class="cover">
+
+
+    <div class="container">
+        <div class="row">
+            <button type="button" class="btn btn-warning" id="get-data">Get data from JSON</button>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-push-2 json-data">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Product</th>
-                                <th>Category</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
+                                <th>Name</th>
+                                <th>Class</th>
+                                <th>Age</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach($products as $product)
-                            <tr>
-                                <td class="selectable">
-                                    <input type="checkbox" value="{{$product->id}}" hidden>
-                                    <a href="{{ URL::to('product/'.$product->id.'/edit') }}">{{$product->productName}}</a>
-                                </td>
-                                <td>{{$product->category->categoryName}}</td>
-                                <td>{{$product->quantity}}</td>
-                                <td>{{$product->price}}
-                                    <form action="product/{{ $product->id }}" method="POST">
-                                        {{ csrf_field() }}
-                                        <input name="_method" hidden value="delete" />
-                                        <button class="btn btn-primary pull-right" type="submit">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
+                        <tbody id="data-body">
+
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div style="display:block; margin:auto; width:auto">
-                    {{$products->links()}}
-                </div>
-            </div>
         </div>
     </div>
+
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var url = "http://localhost/Seekit-MS/data.json",data;
+
+            function popData(param) {
+                var options = $.extend({
+                    target: null,
+                    url: null,
+                }, param)
+                var response;
+                options.target.empty();
+                $.getJSON(options.url,
+                    function (data, textStatus, jqXHR) {
+                        response = data;
+                    });
+                //console.log(response);
+            }
+            $("#get-data").click(function (e) {
+                e.preventDefault();
+                    data = popData({
+                    target: $('#data-body'),
+                    url: url
+                });
+                //console.log(data);
+                /*$.each(data, function (indexInArray, value) {
+                    $("#data-body").append("<tr><td>" + value.name + "</td><td>" + value.class +
+                        "</td><td>" + value.age + "</td></tr>");
+                });*/
+            });
+        });
+    </script>
 </body>
 
 </html>
