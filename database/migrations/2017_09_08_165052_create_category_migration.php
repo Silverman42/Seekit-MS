@@ -13,7 +13,7 @@ class CreateCategoryMigration extends Migration
      */
     public function up()
     {
-        Schema::connection('sqlite')->create('category', function (Blueprint $table) {
+        Schema::create('category', function (Blueprint $table) {
             $table->increments('id');
             $table->string('categoryName',225);
             $table->timestamps();

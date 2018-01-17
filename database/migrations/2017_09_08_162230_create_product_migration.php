@@ -13,7 +13,7 @@ class CreateProductMigration extends Migration
      */
     public function up()
     {
-        Schema::connection('sqlite')->create('product', function (Blueprint $product) {
+        Schema::create('product', function (Blueprint $product) {
                 $product->increments('id');
                 $product->string('productName',255);
                 $product->integer('categoryId', false);
@@ -30,6 +30,6 @@ class CreateProductMigration extends Migration
      */
     public function down()
     {
-        Schema::connection('sqlite')->dropIfExists('product');
+        Schema::dropIfExists('product');
     }
 }
