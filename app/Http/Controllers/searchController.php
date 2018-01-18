@@ -70,7 +70,7 @@ class searchController extends Controller
             $counter = $request->input('page') * 10;
             $category = \seekit\category::where("categoryName","LIKE","%$searchItem%")->get(['id']);
             $category_id = array_pluck($category->toArray(), 'id');
-            $search = \seekit\product::whereIn('categoryId',$category_id)->with('category')->get();
+            $search = \seekit\product::whereIn('category_id',$category_id)->with('category')->get();
             return response()->json($search);  
         }
     }

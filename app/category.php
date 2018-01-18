@@ -12,6 +12,6 @@ class category extends Model
     protected $table = 'category';
     protected $dates = ['deleted'];
     public function products(){
-        return $this->hasMany('\seekit\product','categoryId');
+        return $this->hasMany('\seekit\product','category_id');
     }
 }

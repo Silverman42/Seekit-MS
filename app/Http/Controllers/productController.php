@@ -133,7 +133,7 @@ class productController extends Controller
         $categoryId = strip_tags($requests['productCategory']);
         $productDesc = strip_tags($requests['productDesc']);
         $product = \seekit\product::where("id",$id)
-                                    ->update(array("productName"=>$productName,"categoryId"=>$categoryId,"product_desc"=>$productDesc));
+                                    ->update(array("productName"=>$productName,"category_id"=>$categoryId,"product_desc"=>$productDesc));
    
         $success = "Product details updated";
         return response()->json($success);
