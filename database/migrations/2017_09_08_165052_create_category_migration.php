@@ -27,6 +27,6 @@ class CreateCategoryMigration extends Migration
      */
     public function down()
     {
-        Schema::connection('sqlite')->dropIfExists('category');
+        Schema::dropIfExists('category');
     }
 }
