@@ -15,8 +15,8 @@ class AddForeignToTransDesc extends Migration
     {
         //
         Schema::table('transaction_description', function (Blueprint $table) {
-            $table->foreign('product_id')->references('id')->on('product');
-            $table->foreign('transaction_id')->references('id')->on('transaction');
+            $table->foreign('product_id')->references('id')->on('product')->nullable();
+            $table->foreign('transaction_id')->references('id')->on('transaction')->nullable();
         });
     }
 

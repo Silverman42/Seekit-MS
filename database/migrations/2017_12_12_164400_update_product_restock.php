@@ -15,7 +15,7 @@ class UpdateProductRestock extends Migration
     {
         Schema::table('product_restock', function (Blueprint $table) {
             //
-            $table->foreign('product_id')->references('id')->on('product');
+            $table->foreign('product_id')->references('id')->on('product')->nullable();
         });
     }
 
