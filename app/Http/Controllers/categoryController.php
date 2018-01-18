@@ -30,14 +30,13 @@ class categoryController extends Controller
             }
         }
         //fetch all categories from category table
-        /*else{
-            $categories = \seekit\category::get();
-            return view('category.index')->with('categories',$categories);
-        }*/
+        else{
+            //$categories = \seekit\category::get();
+            return view('category.index'); //->with('categories',$categories);
+        }
     }
 
-    /**
-     *  Show the form for creating a new resource.
+    /** Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
