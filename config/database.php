@@ -54,16 +54,16 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'host' => $host,
-            //'port' => env('DB_PORT', '3306'),
+            'port' => env('DB_PORT', '3306'),
             'database' => $database,
             'username' => $username,
             'password' => $password,
-            //'unix_socket' => env('DB_SOCKET', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            //'strict' => true,
-            //'engine' => 'InnoDB',
+            'strict' => true,
+            'engine' => 'InnoDB',
         ],
 
         'pgsql' => [
