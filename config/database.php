@@ -54,7 +54,7 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'host' => $host,
-            'port' => env('DB_PORT', '3306'),
+            //'port' => env('DB_PORT', '3306'),
             'database' => $database,
             'username' => $username,
             'password' => $password,
@@ -62,7 +62,7 @@ return [
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            'strict' => true,
+            //'strict' => true,
             'engine' => 'InnoDB',
         ],
 
