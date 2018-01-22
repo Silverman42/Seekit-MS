@@ -16,7 +16,7 @@ class CreateProductRestocksTable extends Migration
         Schema::create('product_restock', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('product_id',false);
+            $table->integer('product_id',false)->unsigned();
             $table->integer('quantity',false);
             $table->date('expiry')->nullable();
             $table->string('Vendor',255)->nullable();
@@ -30,6 +30,6 @@ class CreateProductRestocksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_restocks');
+        Schema::dropIfExists('product_restock');
     }
 }

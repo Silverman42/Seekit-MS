@@ -15,7 +15,8 @@ class UpdateProductRestockTable extends Migration
     {
         Schema::table('transaction_description', function (Blueprint $table) {
             //
-            $table->integer('product_restock_id',false)->foreign()->references('id')->on('product_restock')->default(0);
+            $table->integer('product_restock_id',false)->unsigned();
+            $table->foreign('product_restock_id')->references('id')->on('product_restock')->default(0);
         });
     }
 
@@ -26,8 +27,9 @@ class UpdateProductRestockTable extends Migration
      */
     public function down()
     {
-        Schema::table('product_restock', function (Blueprint $table) {
+        Schema::table('transaction_description', function (Blueprint $table) {
             //
+            $table->dropForeign('transaction_description_product_restock_id_foreign');
             $table->dropColumn('product_restock_id');
         });
     }

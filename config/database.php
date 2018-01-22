@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'default' => 'mysql',//env('DB_CONNECTION', 'sqlite')
+    'default' =>env('DB_CONNECTION', 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,6 +66,20 @@ return [
             'engine' => 'InnoDB',
         ],
 
+        'testDb' => [
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            //'port' => env('DB_PORT', '3306'),
+            'database' => 'heroku_51bfd7952edf5d4',
+            'username' => 'root',
+            'password' => '',
+            //'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            //'strict' => true,
+            'engine' => 'InnoDB',
+        ],
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

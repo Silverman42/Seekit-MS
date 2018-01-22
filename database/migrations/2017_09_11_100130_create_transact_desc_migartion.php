@@ -15,9 +15,9 @@ class CreateTransactDescMigartion extends Migration
     {
         Schema::create('transaction_description', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('product_id', false);
+            $table->integer('product_id', false)->unsigned();
             $table->integer('product_quantity', false);
-            $table->integer('transaction_id',false);
+            $table->integer('transaction_id',false)->unsigned();
             $table->timestamps();
         });
     }

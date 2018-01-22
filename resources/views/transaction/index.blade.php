@@ -168,7 +168,9 @@
                                             <th>Expiry Date</th>
                                             <th>Quantity purchased</th>
                                             <th>Quantity Available</th>
-                                            <th>Price</th>
+                                            <th>Price (#)</th>
+                                            <th>Profit (#)</th>
+                                            <th>Loss (#)</th>
                                         </tr>
                                     </thead>
                                     <tbody id="transaction-body">
@@ -181,6 +183,8 @@
                                             <td></td>
                                             <td></td>
                                             <td id="transactionTotal"></td>
+                                            <td id="totalProfit"></td>
+                                            <td id="totalLoss"></td>
                                         </tr>
                                     </tfoot>
                                 </table>

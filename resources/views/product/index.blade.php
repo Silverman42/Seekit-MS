@@ -88,7 +88,7 @@
     </div>
     <!--Modal for list of Restock batches-->
     <div class="modal fade" id="modal-2">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -117,18 +117,21 @@
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table table-hover">
-                                        <thead>
+                                        <thead style="text-align: center;">
                                             <tr>
                                                 <th>Batch ID</th>
                                                 <th>Quantity</th>
-                                                <th>Price</th>
+                                                <th>Selling Price</th>
+                                                <th>Cost Price</th>
+                                                <th>Profit</th>
+                                                <th>Loss</th>
                                                 <th>Vendor</th>
                                                 <th>Expiry Date</th>
                                                 <th>Restock Date</th>
                                             </tr>
                                         </thead>
                                         <tbody id="restockListBody">
-                                            <tr><td>name</td><td>name</td><td>name</td><td>name</td><td>name</td><td>name</td></tr>
+                                        
                                         </tbody>
                                     </table>
                                 </div>

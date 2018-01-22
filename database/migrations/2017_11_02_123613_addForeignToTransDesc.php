@@ -29,8 +29,8 @@ class AddForeignToTransDesc extends Migration
     {
         //
         Schema::table('transaction_description',function(Blueprint $table){
-            $table->dropForeign('product_id');
-            $table->dropForeign('transaction_id');
+            $table->dropForeign('transaction_description_product_id_foreign');
+            $table->dropForeign('transaction_description_transaction_id_foreign');
         });
     }
 }

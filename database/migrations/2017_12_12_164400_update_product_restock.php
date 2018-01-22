@@ -28,7 +28,7 @@ class UpdateProductRestock extends Migration
     {
         Schema::table('product_restock', function (Blueprint $table) {
             //
-            $table->dropForeign('product_id');
+            $table->dropForeign('product_restock_product_id_foreign');
         });
     }
 }

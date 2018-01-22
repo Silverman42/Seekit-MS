@@ -28,7 +28,7 @@ class UpdateProductsMigration extends Migration
     {
         Schema::table('product', function (Blueprint $table) {
             //reverse change of foreign key
-            $table->dropForeign('category_id');
+            $table->dropForeign('product_category_id_foreign');
         });
     }
 }

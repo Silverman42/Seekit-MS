@@ -16,7 +16,7 @@ class CreateProductMigration extends Migration
         Schema::create('product', function (Blueprint $product) {
                 $product->increments('id');
                 $product->string('productName',255);
-                $product->integer('category_id', false);
+                $product->integer('category_id', false)->unsigned();
                 $product->integer('price', false);
                 $product->integer('quantity',false);
                 $product->timestamps();

@@ -405,7 +405,7 @@
                    });
                    console.log(response);
                    $.each(response, function(indexInArray, value) {
-                       $('#av-transaction-body').append($('<tr><td>' + value.product.productName + '</td><td>' + value.product_restock.batch_id + '</td><td>' + value.product_restock.Vendor + '</td><td>' + value.product_quantity_pur + '</td><td>' + value.product_quantity + '</td><td>' + value.product_price + '</td></tr>'))
+                       $('#av-transaction-body').append($('<tr><td>' + value.product.productName + '</td><td>' + value.product_restock.batch_id + '</td><td>' + value.product_restock.Vendor + '</td><td>' + value.product_quantity_pur + '</td><td>' + value.product_quantity + '</td><td>' + value.product_price + '</td></tr>'));
                    });
                },
                error: function(param) {
@@ -415,7 +415,7 @@
        });
        /**
         * @description: Click Event to pop up product restock menu
-        * @param:var string product_name 
+        * @param:var string product_name
         */
        var product_name;
        $('#prodBody').on('click', '.restockProduct', function() {
@@ -423,56 +423,7 @@
            $('.restockProdName').eq(0).text(" " + product_name.text());
            $('input[name="product_id"]').val($(this).attr('data-restock_prod_id'));
        });
-       /**
-        * @description: Click Event to pop up product batch restock list
-        * @param: {integer} restock_id
-        * @param: {integer} paginator
-        */
-       /*
-       (function () {  
-           $.fn.dataTable = function(param){
-               var options = $.extend({
-                   ajaxUrl: null,
-                   ajaxType: 'GET',
-                   ajaxDataParam: [0,0],
-                   bodySelector: null,
-                   appendedData: null,
-                   eventStatus: 0,
-               },param)
-               return this.each(function (index,el) {  
-                   var paginator = options.ajaxDataParam[1];
-                   var id = options.ajaxDataParam[0];
-                   var element = el
-                   function ajaxLoad(options){
-                       $.ajax({
-                           type: options.ajaxType,
-                           url: options.ajaxUrl,
-                           data: '?id='+id+'&page='+paginator,
-                           dataType: options.ajaxData,
-                           success: function (response) {
-                               console.log(response);
-                               $.each(response, function (indexInArray, value) { 
-                                   options.appendedData = value;
-                                   $('#restockListBody').append(options.appendedData);
-                               });
-                               console.log('paginator = '+ paginator+ ' '+value);
-                           },
-                           error:function () {  
-                               console.log('error')
-                           }
-                       });
-                   }
-                   if(options.eventStatus === 0){
-                       ajaxLoad(options);
-                   }
-                   else if(options.eventStatus === 1){
-                       ajaxLoad(options);
-                       paginator++;
-                   }
-               })
-           }
-       }(jQuery))*/
-       var restock_id;
+      var restock_id;
        var paginator = 0;
        var restockSearchInput = $('#searchRestockBatch').val();
        var restockSearchParam = $('select[name=searchRestockParam]').val();
@@ -499,7 +450,7 @@
                        //console.log(response);
                        $('#restockListBody').empty();
                        $.each(response, function(indexInArray, value) {
-                           $('#restockListBody').append('<tr><td>' + value.batch_id + '</td><td>' + value.quantity + '</td><td>' + value.price + '</td><td>' + value.Vendor + '</td><td>' + value.expiry + '</td><td>' + value.created_at + '</td></tr>');
+                           $('#restockListBody').append('<tr><td>' + value.batch_id + '</td><td>' + value.quantity + '</td><td>' + value.selling_price + '</td><td>' + value.cost_price + '</td><td>' + value.profit + '</td><td>' + value.loss + '</td><td>' + value.Vendor + '</td><td>' + value.expiry + '</td><td>' + value.created_at + '</td></tr>');
                        });
                    }
                });
@@ -527,7 +478,7 @@
                    //console.log(response);
                    $('#restockListBody').empty();
                    $.each(response, function(indexInArray, value) {
-                       $('#restockListBody').append('<tr><td>' + value.batch_id + '</td><td>' + value.quantity + '</td><td>' + value.price + '</td><td>' + value.Vendor + '</td><td>' + value.expiry + '</td><td>' + value.created_at + '</td></tr>');
+                       $('#restockListBody').append('<tr><td>' + value.batch_id + '</td><td>' + value.quantity + '</td><td>' + value.selling_price + '</td><td>' + value.Vendor + '</td><td>' + value.expiry + '</td><td>' + value.created_at + '</td></tr>');
                        console.log(value);
                    });
                }
