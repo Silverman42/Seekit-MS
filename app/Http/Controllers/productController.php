@@ -76,7 +76,7 @@ class productController extends Controller
        //continue;
         $product = new \seekit\product;
         $product->productName = strip_tags($requests['productName']);
-        $product->categoryId = strip_tags($requests['productCategory']);
+        $product->category_id = strip_tags($requests['productCategory']);
         $product->product_desc = strip_tags($requests['productDesc']);
         $product->save();   
         $success = "Product created";
