@@ -14,8 +14,9 @@ if( env('APP_ENV') === 'production'){
     URL::forceScheme('https');
 }
 Route::get('/', function () {
-    return view('index');
+    return view('login');
 });
+Auth::routes();
 Route::resource('transaction', 'transactionController');
 Route::resource('product', 'productController' );
 Route::resource('category','categoryController');

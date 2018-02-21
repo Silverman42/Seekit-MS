@@ -9,6 +9,9 @@ use seekit\Http\Controllers\escapeCharController;
 class restockProductController extends Controller
 {
     // Create new product batch for restock
+    public function __construct(){
+        $this->middleware('auth');
+    } 
     public function store(Request $request){
         
         if($request->ajax()){

@@ -1,31 +1,11 @@
-.cover-4{
-    width: 950px;
+.container-fluid{
+    display: none;
+}
+.modal{
     display: block;
-    position: fixed;
+    position: absolute;
     top: 0px;
     left: 0px;
-    right: 0px;
-    bottom: 0px;
-    z-index: 3;
-    padding: 30px 30px;
-    background: black;
-    color: white;
-}
-#p-header{
-    color: white !important;
-    background-color: dodgerblue !important;
-    border: 3px solid dodgerblue;
-}
-input[type="checkbox"]{
-    visibility: hidden;
-}
-.btn{
-    display:  none;
-    visibility: hidden;
-}
-
-.side-nav{
-    display: none;
-    width:0px;
-    visibility: hidden;
+    width: 100%;
+    height: auto;
 }

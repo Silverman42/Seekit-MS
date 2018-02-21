@@ -16,11 +16,11 @@
         }
     </script>
     <!-- Bootstrap CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/custom.css" rel="stylesheet">
-    <link href="../css/bootstrap-theme.css" rel="stylesheet">
-    <link href="../css/non-responsive.css" rel="stylesheet">
-    <link href="../css/printables.css" rel="stylesheet" media="print">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-theme.css') }}" rel="stylesheet">
+    <!--link href="../css/non-responsive.css" rel="stylesheet"-->
+    <link href="{{ asset('css/printables.css') }}" rel="stylesheet" media="print">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -44,17 +44,24 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
+                <li style="padding: 15px">
+                    Welcome, {{ auth()->user()->username }}
+                </li>
                 <li>
-                    <a href="#" data-toggle="tooltip" title="Logout" data-placement="bottom">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                     </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         About
                         <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li>ligdhh</li>
+                        <li style="padding: 20px; font-size:13px">Developed By Nkeze Sylvester Uche</li>
+                        <li style="padding: 20px; font-size:13px"><a href="http://www.fIbreware.xyz" target="_blank">FIbreware 2017</a></li>
                     </ul>
                 </li>
             </ul>
@@ -98,6 +105,7 @@
                         </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" style="display:block; margin: auto; margin-bottom: 5px" onclick="forprint()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></button>
                     <div class="load-spinner-2" data-spinner-count="two">
                     </div>
                 </div>
@@ -105,28 +113,25 @@
         </div>
     </div>
     <div class="container-fluid">
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1 cover-2 fixed-left">
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="All products" data-placement="right">
-                <a href="../product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+        <div class="fixed-left">
+            <div class="side-nav">
+                <a href="../product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Product List</a>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Product" data-placement="right">
-                <a href="../product/create"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><sup>+</sup></a>
+            <div class="side-nav" >
+                <a href="../category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Inventory</a>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Category" data-placement="right">
-                <a href="../category"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+            <div class="side-nav">
+                <a href="#"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Transactions</a>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Transactions" data-placement="right">
-                <a href="/transaction"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a>
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Edit Admin" data-placement="right">
-                <a href="../admin"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+            <div class="side-nav">
+                <a href="../admin"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Admin</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-8 col-md-push-2 cover-4">
                 <div class="col-md-12">
                     <div class="col-sm-11">
-                        <legend>New Transaction</legend>
+                        <legend>New Transaction <span id="transactionId"></span></legend>
                     </div>
                     <div class="col-sm-1">
                         <button type="button" id="delete-transact" class="btn btn-default" data-toggle="tooltip" title="Delete All Entries" data-placement="right">
@@ -171,6 +176,7 @@
                                             <th>Price (#)</th>
                                             <th>Profit (#)</th>
                                             <th>Loss (#)</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody id="transaction-body">
@@ -182,16 +188,17 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td id="transactionTotal"></td>
-                                            <td id="totalProfit"></td>
-                                            <td id="totalLoss"></td>
+                                            <td id="transactionTotal">0</td>
+                                            <td id="totalProfit">0</td>
+                                            <td id="totalLoss">0</td>
+                                            <td></td>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
                         </div>
                         <div class="col-md-12" style="text-align:center">
-                            <button id="transactionCreate" disabled="disabled" style="margin:auto;display:  block" data-button-id="submitTransaction" type="submit" data-toggle="tooltip"
+                            <button id="transactionCreate" style="margin:auto;display:  block" disabled="disabled" data-button-id="submitTransaction" type="submit" data-toggle="tooltip"
                                 title="Create transaction" data-placement="right" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
@@ -236,7 +243,7 @@
                                     <th></th>
                                     <th>Transaction ID</th>
                                     <th>Time & Date</th>
-                                    <th>Profit</th>
+                                    <th>Total Price</th>
                                 </tr>
                             </thead>
                             <tbody id="transactBody">
@@ -264,11 +271,11 @@
         </div>
     </div>
     <!-- jQuery -->
-    <script src="../js/jquery-2.1.4.min.js"></script>
+    <script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
     <!-- Bootstrap JavaScript -->
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/custom.js"></script>
-    <script src="../js/custom2.js"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/custom2.js') }}"></script>
 </body>
 
 </html>

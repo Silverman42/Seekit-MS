@@ -7,6 +7,9 @@ use Carbon\Carbon;
 
 class searchController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    } 
     //Search products in Product table for use in transaction.
     public function transProductSearch(Request $request){
         if (!empty($request->input('searchItem'))) {

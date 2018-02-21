@@ -12,9 +12,12 @@ class UpdateProductTable extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::table('product', function (Blueprint $table) {
+    {   
+        Schema::table('product', function(Blueprint $table) {
+            //
             $table->text('product_desc',255)->nullable();
+        });
+        Schema::table('product', function (Blueprint $table) {
             $table->dropColumn(['price','quantity']);
             //
         });

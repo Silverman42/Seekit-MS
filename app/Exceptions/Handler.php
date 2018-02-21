@@ -44,6 +44,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+            return redirect()->route('login')->with('message', 'You session expired. Please try again.');
+        } 
         return parent::render($request, $exception);
     }
 

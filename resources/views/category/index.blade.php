@@ -7,10 +7,10 @@
         <meta name="csrf_token" content="{{ csrf_token() }}">
         <title>New Category</title>
         <!-- Bootstrap CSS -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="css/custom.css">
-        <link href="css/bootstrap-theme.css" rel="stylesheet">
-        <link href="css/non-responsive.css" rel="stylesheet">
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
+        <link href="{{ asset('css/bootstrap-theme.css') }}" rel="stylesheet">
+        <!--link href="css/non-responsive.css" rel="stylesheet"-->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -33,17 +33,24 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li style="padding: 15px">
+                        Welcome, {{ auth()->user()->username }}
+                    </li>
                     <li>
-                        <a href="#" data-toggle="tooltip" title="Logout" data-placement="bottom">
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             About
                         <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>ligdhh</li>
+                            <li style="padding: 20px; font-size:13px">Developed By Nkeze Sylvester Uche</li>
+                        <li style="padding: 20px; font-size:13px"><a href="http://www.fIbreware.xyz" target="_blank">FIbreware 2017</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -124,21 +131,18 @@
             </div>
         </div>
         <div class="container-fluid">
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1 cover-2 fixed-left">
-                <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="All products" data-placement="right">
-                    <a href="/product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+            <div class="fixed-left">
+                <div class="side-nav">
+                    <a href="/product"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Product List</a>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="New Product" data-placement="right">
-                    <a href="/product/create"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><sup>+</sup></a>
-                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Category" data-placement="right">
-                    <a href="#"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                <div class="side-nav">
+                    <a href="#"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Inventory</a>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Transactions" data-placement="right">
-                    <a href="/transaction"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a>
+                <div class="side-nav">
+                    <a href="/transaction"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Transactions</a>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-12 side-nav" data-toggle="tooltip" title="Edit Admin" data-placement="right">
-                    <a href="/admin"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                <div class="side-nav">
+                    <a href="/admin"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Admin</a>
                 </div>
             </div>
             <div class="row">
@@ -302,10 +306,10 @@
             </div>
         </div>
         <!-- jQuery -->
-        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
         <!-- Bootstrap JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/custom.js"></script>
-        <script src="js/custom2.js"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/custom.js') }}"></script>
+        <script src="{{ asset('js/custom2.js') }}"></script>
     </body>
 </html>

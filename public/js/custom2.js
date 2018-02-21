@@ -918,8 +918,17 @@
                $('#categoryUpdate').attr('action', categoryEditURL);
                $('.categoryEditHeader').text(categoryName);
                $('#categoryUpdate>div>div>input[name=categoryName]').val(categoryName);
-               console.log($('#categoryUpdate').attr('action'));
                // body...
            });
        })();
+       /*
+       / @description: Changing the navlinks to active if its hypertext reference (href)  = '#'
+       */
+       (function() {
+          var href = "";
+          $('.side-nav').each(function(index,e) {
+            href = $(this).children('a').attr('href');
+            href === "#" ? $(this).addClass("tab-active") : $(this).removeClass("tab-active");
+          })
+      })();
    });

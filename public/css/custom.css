@@ -8,7 +8,7 @@
 }
 body{
     padding-top: 80px;
-    background: rgba(200, 200, 160, 0.7) 
+    background: rgba(162, 180, 206, 0.7);
 }
 legend{
     font-family: "Righteous",Arial, Helvetica, sans-serif
@@ -114,19 +114,27 @@ td:nth-of-type(even)>a:hover{
 
 /*Side-bar*/
 .fixed-left{
-    width: 70px;
+    padding-top:80px; 
     display: block;
     position: fixed;
-    left: -14px;
-    top: 52px;
-    bottom: 0px;
+    width: auto;  
+    background: rgba(240,240,240,1);
+    left: 0px;
+    top: 0px;
+    height: 100vh;
     z-index: 4;
 }
+@media(max-width: 768px){
+    .fixed-left{
+        width: 0px;
+        overflow-x: hidden;
+    }
+}
 .side-nav{
-    left: 0px;
-    padding: 20px 0pc;
+    display:block;
+    padding: 20px 5px;
     background: rgba(240,240,240,1);
-    text-align: center;
+    text-align: left;
     -webkit-transition: background 0.3s linear 0.7s; 
     transition: background 0.3s linear 0.2s;
 }
@@ -136,7 +144,11 @@ td:nth-of-type(even)>a:hover{
 .side-nav>a{
     text-decoration: none;
     color: rgba(90, 90, 90, 1);
-    font-size: 17px;
+    font-size: 14px;
+}
+.tab-active{
+    background: rgba(200,200,200,1);
+    color: white;
 }
 /*btn*/
 .btn{
@@ -296,7 +308,7 @@ td:nth-of-type(even)>a:hover{
 .nav-btns{
     display: block;
     position: fixed;
-    left: -37px;
+    right: 0px;
     bottom: 0px;
     z-index: 5;
 }

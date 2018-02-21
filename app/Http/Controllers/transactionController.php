@@ -11,6 +11,9 @@ use Mavinoo\UpdateBatch\UpdateBatch;
 
 class transactionController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    } 
     /**
      * Display a listing of the resource.
      *
@@ -49,14 +52,18 @@ class transactionController extends Controller
             $count++;
         }
         $total = $entities[0]['total'];
-        $transaction_name = 'transaction_'.time();
+        $transaction_name = $entities[0]['transaction_id'];
+        $totalProfit = $entities[0]['totalProfit'];
+        $totalLoss = $entities[0]['totalLoss'];
         $input_params = $entities[1];
         $prod_update = [];
-      $queryDB =  DB::transaction(function() use ($total,$transaction_name,$input_params,$prod_update){
+      $queryDB =  DB::transaction(function() use ($total,$transaction_name,$input_params,$prod_update,$totalProfit,$totalLoss){
         try{
             $getTransactionId = DB::table('transaction')->insertGetId([
                 'transaction_name'=> $transaction_name,
                 'total_price'=> $total,
+                'total_profit'=>$totalProfit,
+                'total_loss' => $totalLoss,
                 'created_at'=> Carbon::now(),
                 'updated_at'=> Carbon::now()]);
             for($i=0; $i<count($input_params); $i++){
